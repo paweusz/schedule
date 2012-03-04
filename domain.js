@@ -23,9 +23,11 @@ pl.com.paweusz = pl.com.paweusz || {};
     this.end = end;
   }
 
-  this.Schedule = function() {
-    lessons = [];
+  this.Schedule = function(name) {
+    this.name = name;
+    this.lessons = [];
   }
+
 }).apply(pl.com.paweusz);
 
 
