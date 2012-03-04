@@ -24,6 +24,10 @@ pl.com.paweusz.schedule.domain = pl.com.paweusz.schedule.domain || {};
     this.start = start;
     this.end = end;
   }
+  
+  this.Timeslot.prototype.getDuration = function() {
+    return this.end - this.start;
+  }
 
   this.Schedule = function(name) {
     this.name = name;
@@ -31,5 +35,4 @@ pl.com.paweusz.schedule.domain = pl.com.paweusz.schedule.domain || {};
   }
 
 }).apply(pl.com.paweusz.schedule.domain);
-
 
