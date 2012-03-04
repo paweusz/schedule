@@ -1,3 +1,5 @@
+"use strict";
+
 var pl = pl || {};
 pl.com = pl.com || {};
 pl.com.paweusz = pl.com.paweusz || {};
