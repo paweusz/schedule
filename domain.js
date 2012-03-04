@@ -1,24 +1,31 @@
-function Subject(name) {
-  this.name = name;
-}
+var pl = pl || {};
+pl.com = pl.com || {};
+pl.com.paweusz = pl.com.paweusz || {};
 
-function Lesson(timeslot, subject, weekday) {
-  this.timeslot = timeslot;
-  this.subject = subject;
-  this.weekday = weekday;
-}
+(function () {
 
-function Weekday(name) {
-  this.name = name;
-}
+  this.Subject = function(name) {
+    this.name = name;
+  };
 
-function Timeslot(start, end) {
-  this.start = start;
-  this.end = end;
-}
+  this.Lesson = function(timeslot, subject, weekday) {
+    this.timeslot = timeslot;
+    this.subject = subject;
+    this.weekday = weekday;
+  }
 
-function Schedule() {
-  lessons = [];
-}
+  this.Weekday = function(name) {
+    this.name = name;
+  }
+
+  this.Timeslot = function(start, end) {
+    this.start = start;
+    this.end = end;
+  }
+
+  this.Schedule = function() {
+    lessons = [];
+  }
+}).apply(pl.com.paweusz);
 
 
