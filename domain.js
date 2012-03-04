@@ -1,6 +1,8 @@
 var pl = pl || {};
 pl.com = pl.com || {};
 pl.com.paweusz = pl.com.paweusz || {};
+pl.com.paweusz.schedule = pl.com.paweusz.schedule || {};
+pl.com.paweusz.schedule.domain = pl.com.paweusz.schedule.domain || {};
 
 (function () {
 
@@ -28,6 +30,6 @@ pl.com.paweusz = pl.com.paweusz || {};
     this.lessons = [];
   }
 
-}).apply(pl.com.paweusz);
+}).apply(pl.com.paweusz.schedule.domain);
 
 
