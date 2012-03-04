@@ -5,36 +5,34 @@ pl.com = pl.com || {};
 pl.com.paweusz = pl.com.paweusz || {};
 pl.com.paweusz.schedule = pl.com.paweusz.schedule || {};
 pl.com.paweusz.schedule.domain = pl.com.paweusz.schedule.domain || {};
+var domain = pl.com.paweusz.schedule.domain;
 
-(function () {
+domain.Subject = function(name) {
+  this.name = name;
+};
 
-  this.Subject = function(name) {
-    this.name = name;
-  };
+domain.Lesson = function(timeslot, subject, weekday) {
+  this.timeslot = timeslot;
+  this.subject = subject;
+  this.weekday = weekday;
+}
 
-  this.Lesson = function(timeslot, subject, weekday) {
-    this.timeslot = timeslot;
-    this.subject = subject;
-    this.weekday = weekday;
-  }
+domain.Weekday = function(name) {
+  this.name = name;
+}
 
-  this.Weekday = function(name) {
-    this.name = name;
-  }
+domain.Timeslot = function(start, end) {
+  this.start = start;
+  this.end = end;
+}
 
-  this.Timeslot = function(start, end) {
-    this.start = start;
-    this.end = end;
-  }
-  
-  this.Timeslot.prototype.getDuration = function() {
-    return this.end - this.start;
-  }
+domain.Timeslot.prototype.getDuration = function() {
+  return this.end - this.start;
+}
 
-  this.Schedule = function(name) {
-    this.name = name;
-    this.lessons = [];
-  }
+domain.Schedule = function(name) {
+  this.name = name;
+  this.lessons = [];
+}
 
-}).apply(pl.com.paweusz.schedule.domain);
 
