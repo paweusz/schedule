@@ -26,8 +26,28 @@ domain.Timeslot = function(start, end) {
   this.end = end;
 }
 
-domain.Timeslot.prototype.getDuration = function() {
-  return this.end - this.start;
+domain.Timeslot.prototype = {
+  
+  getStartHour: function() {
+    return this.start.getHours();
+  },
+  
+  getStartMinute: function() {
+    return this.start.getMinutes();
+  },
+  
+  getEndHour: function() {
+    return this.end.getHours();
+  },
+  
+  getEndMinute: function() {
+    return this.end.getMinutes();
+  }
+  
+}
+
+domain.hmToDate = function(hour, minute) {
+  return new Date(0, 0, 0, hour, minute);
 }
 
 domain.Schedule = function(name) {
