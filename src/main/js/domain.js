@@ -1,33 +1,23 @@
 "use strict";
 
-var pl = pl || {};
-pl.com = pl.com || {};
-pl.com.paweusz = pl.com.paweusz || {};
-pl.com.paweusz.schedule = pl.com.paweusz.schedule || {};
-pl.com.paweusz.schedule.domain = pl.com.paweusz.schedule.domain || {};
-var domain = pl.com.paweusz.schedule.domain;
+Schedule.Subject = Ember.Object.extend({
+  name: undefined
+});
 
-domain.Subject = function(name) {
-  this.name = name;
-};
+Schedule.Lesson = Ember.Object.extend({
+  timeslot: undefined,
+  subject: undefined,
+  weekday: undefined
+});
 
-domain.Lesson = function(timeslot, subject, weekday) {
-  this.timeslot = timeslot;
-  this.subject = subject;
-  this.weekday = weekday;
-}
+Schedule.Weekday = Ember.Object.extend({
+  name: undefined
+});
 
-domain.Weekday = function(name) {
-  this.name = name;
-}
+Schedule.Timeslot = Ember.Object.extend({
+  start: undefined,
+  end: undefined,
 
-domain.Timeslot = function(start, end) {
-  this.start = start;
-  this.end = end;
-}
-
-domain.Timeslot.prototype = {
-  
   getStartHour: function() {
     return this.start.getHours();
   },
@@ -44,15 +34,15 @@ domain.Timeslot.prototype = {
     return this.end.getMinutes();
   }
   
-}
+});
 
-domain.hmToDate = function(hour, minute) {
+Schedule.hmToDate = function(hour, minute) {
   return new Date(0, 0, 0, hour, minute);
 }
 
-domain.Schedule = function(name) {
-  this.name = name;
-  this.lessons = [];
-}
+Schedule.Schedule = Ember.Object.extend({
+  name: undefined,
+  lessons: []
+});
 
 
