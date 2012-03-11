@@ -12,6 +12,15 @@ Schedule.Model = Ember.Object.extend({
     };
   },
   
+  weekdays: undefined,
+  
+  getWeekdays: function() {
+    if (typeof this.weekdays === "undefined") {
+      this.weekdays = this.loadWeekdays();
+    }
+    return this.weekdays;
+  },
+  
   loadTimeslots: function() {
     return [
       Schedule.Timeslot.create({start: Schedule.hmToDate(8, 0), end: Schedule.hmToDate(8, 45)}),
@@ -25,6 +34,15 @@ Schedule.Model = Ember.Object.extend({
     ];
   },
   
+  timeslots: undefined,
+  
+  getTimeslots: function() {
+    if (typeof this.timeslots === "undefined") {
+      this.timeslots = this.loadTimeslots();
+    }
+    return this.timeslots;
+  },
+  
   loadSubjects: function() {
     return {
       EW: Schedule.Subject.create({id: "EW", name: "Edukacja Wczesnoszkolna"}),
@@ -33,6 +51,15 @@ Schedule.Model = Ember.Object.extend({
       EWsg: Schedule.Subject.create({id: "EWsg", name: "Wychowanie fizyczne"}),
       ang: Schedule.Subject.create({id: "ang", name: "Język angielski"})
     };
+  },
+  
+  subjects: undefined,
+  
+  getSubjects: function() {
+    if (typeof this.subjects === "undefined") {
+      this.subjects = this.loadSubjects();
+    }
+    return this.subjects;
   },
   
   loadLessonTOs: function() {
@@ -67,34 +94,40 @@ Schedule.Model = Ember.Object.extend({
     ];
   },
   
-  toLessons: function(timeslots, subjects, weekdays, lessonTOs) {
+  toLessons: function(lessonTOs) {
     var lessons = [];
     for (var i = 0; i < lessonTOs.length; i++) {
       var lessonTO = lessonTOs[i];
-      lessons.push(this.toLesson(timeslots, subjects, weekdays, lessonTO));
+      lessons.push(this.toLesson(lessonTO));
     }
     return lessons;
   },
   
-  toLesson: function(timeslots, subjects, weekdays, lessonTO) {
+  toLesson: function(lessonTO) {
     return Schedule.Lesson.create({
-      timeslot: timeslots[lessonTO.timeslot - 1],
-      subject: subjects[lessonTO.subjectId],
-      weekday: weekdays[lessonTO.weekdayId]
+      timeslot: this.getTimeslots()[lessonTO.timeslot - 1],
+      subject: this.getSubjects()[lessonTO.subjectId],
+      weekday: this.getWeekdays()[lessonTO.weekdayId]
     });
   },
   
   loadLessons: function() {
-    var weekdays = this.loadWeekdays();
-    var timeslots = this.loadTimeslots();
-    var subjects = this.loadSubjects();
-    return this.toLessons(timeslots, subjects, weekdays, this.loadLessonTOs());
+    return this.toLessons(this.loadLessonTOs());
+  },
+  
+  lessons: undefined,
+  
+  getLessons: function() {
+    if (typeof this.lessons === "undefined") {
+      this.lessons = this.loadLessons();
+    }
+    return this.lessons;
   },
    
   loadSchedule: function(id) {
     return Schedule.Schedule.create({
       name: id,
-      lessons: this.loadLessons()
+      lessons: this.getLessons()
     });
   },
   
