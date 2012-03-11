@@ -1,6 +1,7 @@
 "use strict";
 
 Schedule.Subject = Ember.Object.extend({
+  id: undefined,
   name: undefined
 });
 
@@ -11,6 +12,7 @@ Schedule.Lesson = Ember.Object.extend({
 });
 
 Schedule.Weekday = Ember.Object.extend({
+  id: undefined,
   name: undefined
 });
 
