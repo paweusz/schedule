@@ -2,5 +2,5 @@
 
 Schedule.WeekdayView = Ember.View.extend({
   templateName: 'weekday',
-  weekdayNameBinding: 'this.weekday.name'
+  weekdayNameBinding: Ember.Binding.oneWay('this.weekday.name')
 });
