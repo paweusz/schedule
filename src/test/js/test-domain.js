@@ -39,6 +39,9 @@ $(document).ready(function(){
     
     var lMon = schedule.getLessons(mon);
     equal(lMon.length, 2, "There should be 2 lessons on Mon");
+
+    var lTue = schedule.getLessons(tue);
+    equal(lTue.length, 1, "There should be 1 lesson on Tue");
     
   });
 

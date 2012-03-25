@@ -46,7 +46,8 @@ Schedule.Schedule = Ember.Object.extend({
   name: undefined,
   lessons: [],
   getLessons: function(weekday) {
-    
+    var lessonsInWeekday = this.lessons.filterProperty('weekday', weekday);
+    return lessonsInWeekday;
   }
 });
 
