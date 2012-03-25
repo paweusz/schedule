@@ -34,14 +34,17 @@ $(document).ready(function(){
     schedule.lessons = [
       Schedule.Lesson.create({timeslot: t1, weekday: mon, subject: math}),
       Schedule.Lesson.create({timeslot: t0, weekday: tue, subject: math}),
-      Schedule.Lesson.create({timeslot: t1, weekday: mon, subject: it})
+      Schedule.Lesson.create({timeslot: t0, weekday: mon, subject: it})
     ];
     
     var lMon = schedule.getLessons(mon);
     equal(lMon.length, 2, "There should be 2 lessons on Mon");
+    equal(lMon[0].subject, it, "First lesson should be IT");
+    equal(lMon[1].subject, math, "Second lesson should be Math");
 
     var lTue = schedule.getLessons(tue);
     equal(lTue.length, 1, "There should be 1 lesson on Tue");
+    equal(lTue[0].subject, math, "First lesson should be Math");
     
   });
 

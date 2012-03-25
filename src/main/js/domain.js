@@ -8,7 +8,10 @@ Schedule.Subject = Ember.Object.extend({
 Schedule.Lesson = Ember.Object.extend({
   timeslot: undefined,
   subject: undefined,
-  weekday: undefined
+  weekday: undefined,
+  getTimeslot: function() {
+    return this.timeslot;
+  }
 });
 
 Schedule.Weekday = Ember.Object.extend({
@@ -42,11 +45,28 @@ Schedule.hmToDate = function(hour, minute) {
   return new Date(0, 0, 0, hour, minute);
 }
 
+Schedule.sgn = function(value) {
+  return value > 0 ? 1 : value < 0 ? -1 : 0;
+}
+
+Schedule.compareTimeslots = function(t0, t1) {
+  var result = Schedule.sgn(t0.getStartHour() - t1.getStartHour());
+  if (result == 0) {
+    result = Schedule.sgn(t0.getStartMinute() - t1.getStartMinute());
+  }
+  return result;
+}
+
+Schedule.compareLessons = function(l0, l1) {
+  return Schedule.compareTimeslots(l0.getTimeslot(), l1.getTimeslot());
+}
+
 Schedule.Schedule = Ember.Object.extend({
   name: undefined,
   lessons: [],
   getLessons: function(weekday) {
     var lessonsInWeekday = this.lessons.filterProperty('weekday', weekday);
+    lessonsInWeekday.sort(Schedule.compareLessons);
     return lessonsInWeekday;
   }
 });
