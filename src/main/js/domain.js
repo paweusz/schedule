@@ -77,6 +77,9 @@ Schedule.Schedule = Ember.Object.extend({
   },
   getTimeslots: function() {
     return this.timeslots;
+  },
+  getName: function() {
+    return this.name;
   }
 });
 
