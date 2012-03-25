@@ -12,19 +12,14 @@
   <body>
 
     <script type="text/x-handlebars" data-template-name="schedule">
-      <span>{{name}}</span>
+      <div><span>{{name}}</span></div>
       {{#each weekdays}}
-      <span>{{name}}</span>
+        {{view Schedule.WeekdayView weekdayBinding="this"}}
       {{/each}}
     </script>
 
     <script type="text/x-handlebars" data-template-name="weekday">
       <span>{{weekday.name}}</span>
-      {{#each lessons}}
-      <div>
-        <span>{{subject.name}}</span>
-      </div>
-      {{/each}}
     </script>
 
     <div id="container">
