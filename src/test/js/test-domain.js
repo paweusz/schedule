@@ -19,6 +19,28 @@ $(document).ready(function(){
     equal(Schedule.hmToDate(22, 59).getHours(), 22, "Hour should be 22");
     equal(Schedule.hmToDate(22, 59).getMinutes(), 59, "Minute should be 59");
   });
+  
+  test("Lessons for weekday", function() {
+    var mon = Schedule.Weekday.create({id: "Mon", name: "Monday"});
+    var tue = Schedule.Weekday.create({id: "Tue", name: "Tuesday"});
+    
+    var t0 = Schedule.Timeslot.create({start: Schedule.hmToDate(8, 0), end: Schedule.hmToDate(8, 45)});
+    var t1 = Schedule.Timeslot.create({start: Schedule.hmToDate(8, 50), end: Schedule.hmToDate(9, 35)});
+
+    var math = Schedule.Subject.create({id: "math", name: "Math"});
+    var it = Schedule.Subject.create({id: "it", name: "Information technology"});
+
+    var schedule = Schedule.Schedule.create();
+    schedule.lessons = [
+      Schedule.Lesson.create({timeslot: t1, weekday: mon, subject: math}),
+      Schedule.Lesson.create({timeslot: t0, weekday: tue, subject: math}),
+      Schedule.Lesson.create({timeslot: t1, weekday: mon, subject: it})
+    ];
+    
+    var lMon = schedule.getLessons(mon);
+    equal(lMon.length, 2, "There should be 2 lessons on Mon");
+    
+  });
 
 });
 

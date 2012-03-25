@@ -44,7 +44,10 @@ Schedule.hmToDate = function(hour, minute) {
 
 Schedule.Schedule = Ember.Object.extend({
   name: undefined,
-  lessons: []
+  lessons: [],
+  getLessons: function(weekday) {
+    
+  }
 });
 
 
