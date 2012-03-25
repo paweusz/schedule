@@ -45,7 +45,59 @@ $(document).ready(function(){
     var lTue = schedule.getLessons(tue);
     equal(lTue.length, 1, "There should be 1 lesson on Tue");
     equal(lTue[0].subject, math, "First lesson should be Math");
-    
+  });
+  
+  test("Signum function", function() {
+    equal(Schedule.sgn(-3), -1, "Signum should be negative"); 
+    equal(Schedule.sgn(-1), -1, "Signum should be negative"); 
+    equal(Schedule.sgn(0), 0, "Signum should be zero"); 
+    equal(Schedule.sgn(3), 1, "Signum should be positive"); 
+    equal(Schedule.sgn(1), 1, "Signum should be positive"); 
+  });
+  
+  test("Timeslot comparison", function() {
+    var t0 = Schedule.Timeslot.create({
+      start: new Date(0, 0, 0, 12, 10),
+      end:   new Date(0, 0, 0, 12, 20)
+    });
+    var t1 = Schedule.Timeslot.create({
+      start: new Date(0, 0, 0, 12, 20),
+      end:   new Date(0, 0, 0, 13, 10)
+    });
+    var t2 = Schedule.Timeslot.create({
+      start: new Date(0, 0, 0, 13, 10),
+      end:   new Date(0, 0, 0, 14, 0)
+    });
+    var t3 = Schedule.Timeslot.create({
+      start: new Date(0, 0, 0, 13, 10),
+      end:   new Date(0, 0, 0, 14, 0)
+    });
+    equal(Schedule.compareTimeslots(t0, t0), 0, "Timeslots should be eqal");
+    equal(Schedule.compareTimeslots(t3, t2), 0, "Timeslots should be eqal");
+    equal(Schedule.compareTimeslots(t0, t1), -1, "First timeslot should be lesser than second");
+    equal(Schedule.compareTimeslots(t1, t0), 1, "First timeslot should be greater than second");
+    equal(Schedule.compareTimeslots(t1, t2), -1, "First timeslot should be lesser than second");
+    equal(Schedule.compareTimeslots(t2, t1), 1, "First timeslot should be greater than second");
+  });
+
+  test("Lesson comparison", function() {
+    var t0 = Schedule.Timeslot.create({
+      start: new Date(0, 0, 0, 12, 10),
+      end:   new Date(0, 0, 0, 12, 20)
+    });
+    var t1 = Schedule.Timeslot.create({
+      start: new Date(0, 0, 0, 13, 10),
+      end:   new Date(0, 0, 0, 14, 0)
+    });
+    var day = Schedule.Weekday.create({id: "day", name: "Day"});
+    var subject = Schedule.Subject.create({id: "subject", name: "Subject"});
+
+    var l0 = Schedule.Lesson.create({timeslot: t0, weekday: day, subject: subject});
+    var l1 = Schedule.Lesson.create({timeslot: t1, weekday: day, subject: subject});
+
+    equal(Schedule.compareLessons(l0, l0), 0, "Lessons should be eqal");
+    equal(Schedule.compareLessons(l0, l1), -1, "First lesson should be lesser than second");
+    equal(Schedule.compareLessons(l1, l0), 1, "First lessons should be greater than second");
   });
 
 });
