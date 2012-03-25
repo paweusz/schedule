@@ -6,4 +6,8 @@ Schedule.WeekdayView = Ember.View.extend({
   lessons: undefined
 });
 
-
+Schedule.ScheduleView = Ember.View.extend({
+  templateName: 'schedule',
+  name: "Pimpa",
+  weekdays: undefined
+});

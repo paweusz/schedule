@@ -3,13 +3,13 @@
 Schedule.Model = Ember.Object.extend({
 
   loadWeekdays: function() {
-    return {
-      Mon: Schedule.Weekday.create({id: "Mon", name: "Poniedziałek"}),
-      Tue: Schedule.Weekday.create({id: "Tue", name: "Wtorek"}),
-      Wed: Schedule.Weekday.create({id: "Wed", name: "Środa"}),
-      Thu: Schedule.Weekday.create({id: "Thu", name: "Czwartek"}),
-      Fri: Schedule.Weekday.create({id: "Fri", name: "Piątek"})
-    };
+    return [
+      Schedule.Weekday.create({id: "Mon", name: "Poniedziałek"}),
+      Schedule.Weekday.create({id: "Tue", name: "Wtorek"}),
+      Schedule.Weekday.create({id: "Wed", name: "Środa"}),
+      Schedule.Weekday.create({id: "Thu", name: "Czwartek"}),
+      Schedule.Weekday.create({id: "Fri", name: "Piątek"})
+    ];
   },
   
   weekdays: undefined,
@@ -19,6 +19,20 @@ Schedule.Model = Ember.Object.extend({
       this.weekdays = this.loadWeekdays();
     }
     return this.weekdays;
+  },
+  
+  weekdaysHash: undefined,
+
+  getWeekdaysHash: function() {
+    if (typeof weekdaysHash === "undefined") {
+      var weekdays = this.getWeekdays();
+      this.weekdaysHash = {};
+      for (var i = 0; i < weekdays.length; i++) {
+        var weekday = weekdays[i];
+        this.weekdaysHash[weekday.id] = weekday;
+      }
+    }
+    return this.weekdaysHash;
   },
   
   loadTimeslots: function() {
@@ -107,7 +121,7 @@ Schedule.Model = Ember.Object.extend({
     return Schedule.Lesson.create({
       timeslot: this.getTimeslots()[lessonTO.timeslot - 1],
       subject: this.getSubjects()[lessonTO.subjectId],
-      weekday: this.getWeekdays()[lessonTO.weekdayId]
+      weekday: this.getWeekdaysHash()[lessonTO.weekdayId]
     });
   },
   
@@ -126,9 +140,13 @@ Schedule.Model = Ember.Object.extend({
    
   loadSchedule: function(id) {
     return Schedule.Schedule.create({
+      id: id,
       name: id,
-      lessons: this.getLessons()
+      lessons: this.getLessons(),
+      weekdays: this.getWeekdays(),
+      timeslots: this.getTimeslots()
     });
   },
   
 });
+

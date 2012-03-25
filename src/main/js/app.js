@@ -9,11 +9,16 @@ $(document).ready(function(){
   
   var schedule = model.loadSchedule("test");
   
-  var weekday = model.getWeekdays().Thu;
-  var view = Schedule.WeekdayView.create({
-    weekday: weekday,
-    lessons: schedule.getLessons(weekday)
+  var weekday = model.getWeekdays().Mon;
+//  var view = Schedule.WeekdayView.create({
+//    weekday: weekday,
+//    lessons: schedule.getLessons(weekday)
+//  });
+  
+  var view = Schedule.ScheduleView.create({
+    weekdays: schedule.weekdays
   });
+
   view.appendTo('#container');
   
 });

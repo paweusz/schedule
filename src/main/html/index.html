@@ -10,6 +10,13 @@
   </head>
   <body>
 
+    <script type="text/x-handlebars" data-template-name="schedule">
+      <span>{{name}}</span>
+      {{#each weekdays}}
+      <span>{{name}}</span>
+      {{/each}}
+    </script>
+
     <script type="text/x-handlebars" data-template-name="weekday">
       <span>{{weekday.name}}</span>
       {{#each lessons}}

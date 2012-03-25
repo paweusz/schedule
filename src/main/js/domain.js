@@ -62,12 +62,21 @@ Schedule.compareLessons = function(l0, l1) {
 }
 
 Schedule.Schedule = Ember.Object.extend({
+  id: undefined,
   name: undefined,
   lessons: [],
+  weekdays: [],
+  timeslots: [],
   getLessons: function(weekday) {
     var lessonsInWeekday = this.lessons.filterProperty('weekday', weekday);
     lessonsInWeekday.sort(Schedule.compareLessons);
     return lessonsInWeekday;
+  },
+  getWeekdays: function() {
+    return this.weekdays;
+  },
+  getTimeslots: function() {
+    return this.timeslots;
   }
 });
 
