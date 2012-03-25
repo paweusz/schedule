@@ -7,11 +7,12 @@ $(document).ready(function(){
   var model = Schedule.Model.create();
   Schedule.mainModel = model;
   
-  model.loadSchedule("test");
+  var schedule = model.loadSchedule("test");
   
   var weekday = model.getWeekdays().Thu;
   var view = Schedule.WeekdayView.create({
-    weekday: weekday
+    weekday: weekday,
+    lessons: schedule.getLessons(weekday)
   });
   view.appendTo('#container');
   

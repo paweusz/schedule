@@ -7,3 +7,9 @@ Schedule.WeekdaysController = Ember.ArrayController.extend({
   model: undefined,
 
 });
+
+Schedule.WeekdayControler = Ember.Object.create({
+  weekday: undefined,
+  lessons: undefined
+});
+

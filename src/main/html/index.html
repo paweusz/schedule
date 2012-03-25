@@ -11,7 +11,12 @@
   <body>
 
     <script type="text/x-handlebars" data-template-name="weekday">
-      <span>{{weekdayName}}</span>
+      <span>{{weekday.name}}</span>
+      {{#each lessons}}
+      <div>
+        <span>{{subject.name}}</span>
+      </div>
+      {{/each}}
     </script>
 
     <div id="container">
