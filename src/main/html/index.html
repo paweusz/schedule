@@ -21,12 +21,16 @@
     <script type="text/x-handlebars" data-template-name="weekday">
       <span>{{weekday.name}}</span>
       {{#each timeslots}}
-        <div>
-          <span>{{start}}</span>
-          <span>&nbsp;-&nbsp</span>
-          <span>{{end}}</span>
-        </div>
+        {{view Schedule.TimeslotView timeslotBinding="this"}}
       {{/each}}
+    </script>
+
+    <script type="text/x-handlebars" data-template-name="timeslot">
+      <div>
+        <span>{{start}}</span>
+        <span>&nbsp;-&nbsp</span>
+        <span>{{end}}</span>
+      </div>
     </script>
 
     <div id="container">
