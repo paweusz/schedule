@@ -47,6 +47,29 @@ $(document).ready(function(){
     equal(lTue[0].subject, math, "First lesson should be Math");
   });
   
+  test("Lesson for timeslot", function() {
+    var mon = Schedule.Weekday.create({id: "Mon", name: "Monday"});
+    var tue = Schedule.Weekday.create({id: "Tue", name: "Tuesday"});
+    
+    var t0 = Schedule.Timeslot.create({start: Schedule.hmToDate(8, 0), end: Schedule.hmToDate(8, 45)});
+    var t1 = Schedule.Timeslot.create({start: Schedule.hmToDate(8, 50), end: Schedule.hmToDate(9, 35)});
+
+    var math = Schedule.Subject.create({id: "math", name: "Math"});
+    var it = Schedule.Subject.create({id: "it", name: "Information technology"});
+
+    var schedule = Schedule.Schedule.create();
+    schedule.lessons = [
+      Schedule.Lesson.create({timeslot: t1, weekday: mon, subject: math}),
+      Schedule.Lesson.create({timeslot: t0, weekday: tue, subject: math}),
+      Schedule.Lesson.create({timeslot: t0, weekday: mon, subject: it})
+    ];
+    
+    equal(schedule.getLesson(mon, t0), schedule.lessons[2], "First lesson on Mon should be IT");
+    equal(schedule.getLesson(mon, t1), schedule.lessons[0], "Second lesson on Mon should be Math");
+    equal(schedule.getLesson(tue, t0), schedule.lessons[1], "First lesson on Tue should be Math");
+    equal(schedule.getLesson(tue, t1), null, "There is no second lesson on Tue");
+  });
+  
   test("Signum function", function() {
     equal(Schedule.sgn(-3), -1, "Signum should be negative"); 
     equal(Schedule.sgn(-1), -1, "Signum should be negative"); 

@@ -72,6 +72,12 @@ Schedule.Schedule = Ember.Object.extend({
     lessonsInWeekday.sort(Schedule.compareLessons);
     return lessonsInWeekday;
   },
+  getLesson: function(weekday, timeslot) {
+    var lessons = this.lessons.filter(function(lesson, index, self) {
+      if (lesson.weekday == weekday && lesson.timeslot == timeslot) { return true; }
+    });
+    return lessons.length > 0 ? lessons[0] : null;
+  },
   getWeekdays: function() {
     return this.weekdays;
   },
