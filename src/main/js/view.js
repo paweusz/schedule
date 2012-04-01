@@ -11,11 +11,16 @@ Schedule.TimeslotView = Ember.View.extend({
   templateName: 'timeslot',
   weekdaysBinding: 'Schedule.scheduleController.weekdays',
   timeslot: null,
+  formatMinute: function(minute) {
+    return $.formatNumber(minute, {format:"00", locale:"us"});
+  },
   start: function() {
-    return this.get('timeslot').getStartHour() + ":" + this.get('timeslot').getStartMinute();
+    return this.get('timeslot').getStartHour() + ":" 
+      + this.formatMinute(this.get('timeslot').getStartMinute());
   }.property(),
   end: function() {
-    return this.get('timeslot').getEndHour() + ":" + this.get('timeslot').getEndMinute();
+    return this.get('timeslot').getEndHour() + ":" 
+      + this.formatMinute(this.get('timeslot').getEndMinute());
   }.property()
 });
 
