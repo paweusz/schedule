@@ -25,6 +25,6 @@ Schedule.LessonView = Ember.View.extend({
   lesson: function() {
     var timeslot = this.get("parentView").get("timeslot");
     var lesson = Schedule.scheduleController.getLesson(this.get('weekday'), timeslot);
-    return lesson != null ? lesson.subject.name : "-";
+    return lesson != null ? lesson.subject.name : "";
   }.property()
 });
