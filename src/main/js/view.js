@@ -13,10 +13,10 @@ Schedule.TimeslotView = Ember.View.extend({
   timeslot: null,
   start: function() {
     return this.get('timeslot').getStartHour() + ":" + this.get('timeslot').getStartMinute();
-  }.property('timeslot'),
+  }.property(),
   end: function() {
     return this.get('timeslot').getEndHour() + ":" + this.get('timeslot').getEndMinute();
-  }.property('timeslot')
+  }.property()
 });
 
 Schedule.LessonView = Ember.View.extend({
