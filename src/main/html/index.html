@@ -23,6 +23,7 @@
     <script type="text/javascript" charset="UTF-8" src="../js/model.js"></script>
     <script type="text/javascript" src="../js/view.js"></script>
     <script type="text/javascript" src="../js/controller.js"></script>
+    <link href="../css/main.css" rel="stylesheet">
   </head>
   <body>
 
@@ -57,7 +58,7 @@
     </script>
 
     <script type="text/x-handlebars" data-template-name="lesson">
-      <td>{{lesson}}</td>
+      <td {{bindAttr class="nextWeekday"}}>{{lessonName}}</td>
     </script>
 
     <div id="container">

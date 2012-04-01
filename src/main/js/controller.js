@@ -5,6 +5,7 @@ Schedule.scheduleController = Ember.Object.create({
   schedule: null,
   name: null,
   timeslots: null,
+  nextWeekday: null,
   
   init: function() {
     var model = Schedule.Model.create();
@@ -16,6 +17,13 @@ Schedule.scheduleController = Ember.Object.create({
   
   getLesson: function(weekday, timeslot) {
     return this.schedule.getLesson(weekday, timeslot);
+  },
+  
+  isNextWeekday: function(weekday) {
+    if (this.nextWeekday == null) {
+      this.nextWeekday = this.schedule.getNextWeekday(new Date());
+    }
+    return this.nextWeekday == weekday;
   }
 
 });
