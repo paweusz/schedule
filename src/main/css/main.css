@@ -1,6 +1,14 @@
 .next-weekday {
-    background-color: #FAA732;
-    background-image: -moz-linear-gradient(center top , #FBB450, #F89406);
-    background-repeat: repeat-x;
-    border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+  background-color: #FAA732;
+  background-image: -moz-linear-gradient(center top , #FBB450, #F89406);
+  background-repeat: repeat-x;
+  border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
 }
+
+.table tbody tr:hover td.next-weekday-cell,
+.table tbody tr:hover th.next-weekday-cell,
+.table-striped tbody tr:nth-child(2n+1) td.next-weekday-cell, 
+.table-striped tbody tr:nth-child(2n+1) th.next-weekday-cell {
+  background-color: transparent;
+}
+

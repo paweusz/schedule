@@ -42,9 +42,17 @@ Schedule.LessonView = Ember.View.extend({
     return lesson != null ? lesson.subject.name : "";
   }.property(),
   
+  nextWeekdayCell: function() {
+    return Schedule.scheduleController.isNextWeekday(this.get('weekday'));
+  }.property()
+  
+});
+
+Schedule.WeekdayView = Ember.View.extend({
+  weekday: null,
+
   nextWeekday: function() {
-    var lesson = this.getLesson();
-    return Schedule.scheduleController.isNextWeekday(this.get('weekday')) && lesson != null;
+    return Schedule.scheduleController.isNextWeekday(this.get('weekday'));
   }.property()
   
 });
