@@ -1,30 +1,30 @@
 "use strict";
 
-Schedule.WeekdayView = Ember.View.extend({
-  templateName: 'weekday',
-  weekday: null,
-  lessons: null,
-  timeslotsBinding: 'Schedule.scheduleController.timeslots'
-});
-
 Schedule.ScheduleView = Ember.View.extend({
   templateName: 'schedule',
   nameBinding: 'Schedule.scheduleController.name',
-  weekdaysBinding: 'Schedule.scheduleController.weekdays'
+  weekdaysBinding: 'Schedule.scheduleController.weekdays',
+  timeslotsBinding: 'Schedule.scheduleController.timeslots'
 });
 
 Schedule.TimeslotView = Ember.View.extend({
   templateName: 'timeslot',
+  weekdaysBinding: 'Schedule.scheduleController.weekdays',
   timeslot: null,
-  lesson: function() {
-    var hackyWeekday = this.get("parentView").get("weekday");
-    var lesson = Schedule.scheduleController.getLesson(hackyWeekday, this.get('timeslot'));
-    return lesson != null ? lesson.subject.name : "-";
-  }.property('timeslot'),
   start: function() {
     return this.get('timeslot').getStartHour() + ":" + this.get('timeslot').getStartMinute();
   }.property('timeslot'),
   end: function() {
     return this.get('timeslot').getEndHour() + ":" + this.get('timeslot').getEndMinute();
   }.property('timeslot')
+});
+
+Schedule.LessonView = Ember.View.extend({
+  templateName: 'lesson',
+  weekday: null,
+  lesson: function() {
+    var timeslot = this.get("parentView").get("timeslot");
+    var lesson = Schedule.scheduleController.getLesson(this.get('weekday'), timeslot);
+    return lesson != null ? lesson.subject.name : "-";
+  }.property()
 });

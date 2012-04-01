@@ -13,27 +13,37 @@
   <body>
 
     <script type="text/x-handlebars" data-template-name="schedule">
-      <div><span>{{name}}</span></div>
-      {{#each weekdays}}
-        {{view Schedule.WeekdayView weekdayBinding="this"}}
-      {{/each}}
-    </script>
-
-    <script type="text/x-handlebars" data-template-name="weekday">
-      <span>{{weekday.name}}</span>
-      {{#each timeslots}}
-        {{view Schedule.TimeslotView timeslotBinding="this"}}
-      {{/each}}
+      <table>
+        <caption>{{name}}</caption>
+        <thead>
+          <tr>
+            <th colspan="3">Czas</th>
+            {{#each weekdays}}
+            <th>{{name}}</th>
+            {{/each}}
+          </tr>
+        </thead>
+        <tbody>
+          {{#each timeslots}}
+            {{view Schedule.TimeslotView timeslotBinding="this"}}
+          {{/each}}
+        </tbody>
+      </table>
     </script>
 
     <script type="text/x-handlebars" data-template-name="timeslot">
-      <div>
-        <span>{{start}}</span>
-        <span>&nbsp;-&nbsp</span>
-        <span>{{end}}</span>
-        <span>:&nbsp</span>
-        <span>{{lesson}}</span>
-      </div>
+      <tr>
+        <td>{{start}}</td>
+        <td>&ndash;</td>
+        <td>{{end}}</td>
+        {{#each weekdays}}
+          {{view Schedule.LessonView weekdayBinding="this"}}
+        {{/each}}
+      </tr>
+    </script>
+
+    <script type="text/x-handlebars" data-template-name="lesson">
+      <td>{{lesson}}</td>
     </script>
 
     <div id="container">
