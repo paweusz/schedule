@@ -141,7 +141,7 @@ Schedule.Model = Ember.Object.extend({
   loadSchedule: function(id) {
     return Schedule.Schedule.create({
       id: id,
-      name: id,
+      name: "Plan lekcji",
       lessons: this.getLessons(),
       weekdays: this.getWeekdays(),
       timeslots: this.getTimeslots()
