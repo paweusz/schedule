@@ -37,6 +37,10 @@ Schedule.Timeslot = Ember.Object.extend({
   
   getEndMinute: function() {
     return this.end.getMinutes();
+  },
+  
+  getEnd: function() {
+    return this.end;
   }
   
 });
@@ -67,26 +71,59 @@ Schedule.Schedule = Ember.Object.extend({
   lessons: [],
   weekdays: [],
   timeslots: [],
+  
   getLessons: function(weekday) {
     var lessonsInWeekday = this.lessons.filterProperty('weekday', weekday);
     lessonsInWeekday.sort(Schedule.compareLessons);
     return lessonsInWeekday;
   },
+  
   getLesson: function(weekday, timeslot) {
     var lessons = this.lessons.filter(function(lesson, index, self) {
       if (lesson.weekday == weekday && lesson.timeslot == timeslot) { return true; }
     });
     return lessons.length > 0 ? lessons[0] : null;
   },
+  
   getWeekdays: function() {
     return this.weekdays;
   },
+  
   getTimeslots: function() {
     return this.timeslots;
   },
+  
   getName: function() {
     return this.name;
+  },
+
+  getNextWeekday: function(currentTs) {
+    var dow = currentTs.getDay();
+    if (dow == 0) {
+      dow = 7; //Fix for Sunday being first day in US calendar
+    }
+    dow--;
+    var weekday = null;
+    var weekdays = this.getWeekdays();
+    if (dow > weekdays.length) {
+      weekday = weekdays[0];
+    } else {
+      var lessons = this.getLessons(weekdays[dow]);
+      var lastLesson = lessons[lessons.length - 1];
+      var lastLessonTs = lastLesson.getTimeslot().getEnd();
+      if (Schedule.hmToDate(currentTs.getHours(), currentTs.getMinutes()) > lastLessonTs) {
+        if (dow + 1 >= weekdays.length) {
+          weekday = weekdays[0];
+        } else {
+          weekday = weekdays[dow + 1];
+        }
+      } else {
+        weekday = weekdays[dow];
+      }
+    }
+    return weekday;
   }
+    
 });
 
 
