@@ -27,18 +27,15 @@ Schedule.TimeslotView = Ember.View.extend({
 Schedule.LessonView = Ember.View.extend({
   templateName: 'lesson',
   weekday: null,
-  lesson: undefined,
   
-  getLesson: function() {
-    if (this.lesson == undefined) {
-      var timeslot = this.get("parentView").get("timeslot");
-      this.lesson = Schedule.scheduleController.getLesson(this.get('weekday'), timeslot);
-    }
-    return this.lesson;
-  },
+  lesson: function() {
+    var timeslot = this.get("parentView").get("timeslot");
+    var weekday = this.get('weekday');
+    return Schedule.scheduleController.getLesson(weekday, timeslot);
+  }.property(),
   
   lessonName: function() {
-    var lesson = this.getLesson();
+    var lesson = this.get('lesson');
     return lesson != null ? lesson.subject.name : "";
   }.property(),
   
