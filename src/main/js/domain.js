@@ -11,12 +11,18 @@ Schedule.Lesson = Ember.Object.extend({
   weekday: undefined,
   getTimeslot: function() {
     return this.timeslot;
+  },
+  getWeekday: function() {
+    return this.weekday;
   }
 });
 
 Schedule.Weekday = Ember.Object.extend({
   id: undefined,
-  name: undefined
+  name: undefined,
+  hash: function() {
+    return this.id;
+  }
 });
 
 Schedule.Timeslot = Ember.Object.extend({
@@ -41,6 +47,10 @@ Schedule.Timeslot = Ember.Object.extend({
   
   getEnd: function() {
     return this.end;
+  },
+  
+  hash: function() {
+    return this.getStartHour() + "_" + this.getStartMinute();
   }
   
 });
@@ -71,6 +81,10 @@ Schedule.Schedule = Ember.Object.extend({
   lessons: [],
   weekdays: [],
   timeslots: [],
+  
+  getAllLessons: function() {
+    return this.lessons;
+  },
   
   getLessons: function(weekday) {
     var lessonsInWeekday = this.lessons.filterProperty('weekday', weekday);
