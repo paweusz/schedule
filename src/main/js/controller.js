@@ -1,63 +1,65 @@
 "use strict";
 
-Schedule.TimeslotWithLessons = Ember.Object.extend({
-  timeslot: null,
-  lessons: null
-});
-
 Schedule.ScheduleController = Ember.Object.extend({
   weekdays: null,
+  timeslots: null,
   schedule: null,
   name: null,
-  timeslotsWithLessons: null,
+  lessonsMatrix: null,
   nextWeekday: null,
+  timeslot2idx: null,
+  weekday2idx: null,
   
   loadModel: function() {
     var model = Schedule.Model.create();
     this.schedule = model.loadSchedule("test");
     this.weekdays = this.schedule.getWeekdays();
+    this.timeslots = this.schedule.getTimeslots();
     this.name = this.schedule.getName();
 
-    this.timeslotsWithLessons = this.createTimeslotsWithLessons();
+    this.createLessonsMatrix();
   },
   
-  createTimeslotsWithLessons: function() {
+  createLessonsMatrix: function() {
     var allTimeslots = this.schedule.getTimeslots();
     var timeslot2idx = {};
     allTimeslots.forEach(function(timeslot, index) {
       timeslot2idx[timeslot.hash()] = index;
     });
+    this.timeslot2idx = timeslot2idx;
     
     var allWeekdays = this.schedule.getWeekdays();
     var weekday2idx = {};
     allWeekdays.forEach(function(weekday, index) {
       weekday2idx[weekday.hash()] = index;
     });
+    this.weekday2idx = weekday2idx;
     
-    var tswls = allTimeslots.map(function(timeslot) {
-      var lessons = new Array(allWeekdays.length);
-      for (var i = 0; i < allWeekdays.length; i++) {
-        lessons[i] = null;
-      }
-      var tswl = Schedule.TimeslotWithLessons.create({
-        timeslot: timeslot,
-        lessons: lessons
+    var matrix = new Array(allTimeslots.length);
+    
+    allTimeslots.forEach(function(timeslot, idx) {
+      var weekdaysArray = new Array(allWeekdays.length);
+      allWeekdays.forEach(function(weekday, idx) {
+        weekdaysArray[idx] = null;
       });
-      return tswl;
-    });  
+      matrix[idx] = weekdaysArray;
+    });
     
     var allLessons = this.schedule.getAllLessons();
     allLessons.forEach(function(lesson) {
       var tsIdx = timeslot2idx[lesson.getTimeslot().hash()];
       var wdIdx = weekday2idx[lesson.getWeekday().hash()];
-      tswls[tsIdx].lessons[wdIdx] = lesson;
+      matrix[tsIdx][wdIdx] = lesson;
     });
+    
+    this.lessonsMatrix = matrix;
 
-    return tswls;
   },
   
   getLesson: function(weekday, timeslot) {
-    return this.schedule.getLesson(weekday, timeslot);
+    var tsIdx = this.timeslot2idx[timeslot.hash()];
+    var wdIdx = this.weekday2idx[weekday.hash()];
+    return this.lessonsMatrix[tsIdx][wdIdx];
   },
   
   isNextWeekday: function(weekday) {
@@ -69,6 +71,4 @@ Schedule.ScheduleController = Ember.Object.extend({
 
 });
 
-Schedule.scheduleController = Schedule.ScheduleController.create();
-Schedule.scheduleController.loadModel();
 
