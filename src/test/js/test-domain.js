@@ -36,9 +36,9 @@ $(document).ready(function(){
   test("Lesson for timeslot", function() {
     var schedule = Schedule.Mock.schedule;
     
-    equal(schedule.getLesson(Schedule.Mock.mon, Schedule.Mock.t0), schedule.lessons[2], "First lesson on Mon should be IT");
-    equal(schedule.getLesson(Schedule.Mock.mon, Schedule.Mock.t1), schedule.lessons[0], "Second lesson on Mon should be Math");
-    equal(schedule.getLesson(Schedule.Mock.tue, Schedule.Mock.t0), schedule.lessons[1], "First lesson on Tue should be Math");
+    equal(schedule.getLesson(Schedule.Mock.mon, Schedule.Mock.t0), schedule.get('lessons')[2], "First lesson on Mon should be IT");
+    equal(schedule.getLesson(Schedule.Mock.mon, Schedule.Mock.t1), schedule.get('lessons')[0], "Second lesson on Mon should be Math");
+    equal(schedule.getLesson(Schedule.Mock.tue, Schedule.Mock.t0), schedule.get('lessons')[1], "First lesson on Tue should be Math");
     equal(schedule.getLesson(Schedule.Mock.tue, Schedule.Mock.t1), null, "There is no second lesson on Tue");
   });
   

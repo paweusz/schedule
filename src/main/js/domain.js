@@ -1,27 +1,35 @@
 "use strict";
 
 Schedule.Subject = Backbone.Model.extend({
-  id: null,
-  name: null
+  defaults: {
+    id: null,
+    name: null
+  }
 });
 
 Schedule.Lesson = Backbone.Model.extend({
-  timeslot: null,
-  subject: null,
-  weekday: null
+  defaults: {
+    timeslot: null,
+    subject: null,
+    weekday: null
+  }
 });
 
 Schedule.Weekday = Backbone.Model.extend({
-  id: null,
-  name: null,
+  defaults: {
+    id: null,
+    name: null
+  },
   hash: function() {
     return this.id;
   }
 });
 
 Schedule.Timeslot = Backbone.Model.extend({
-  start: null,
-  end: null,
+  defaults: {
+    start: null,
+    end: null
+  },
 
   getStartHour: function() {
     return this.get('start').getHours();
@@ -66,11 +74,13 @@ Schedule.compareLessons = function(l0, l1) {
 }
 
 Schedule.Schedule = Backbone.Model.extend({
-  id: null,
-  name: null,
-  lessons: [],
-  weekdays: [],
-  timeslots: [],
+  defaults: {
+    id: null,
+    name: null,
+    lessons: [],
+    weekdays: [],
+    timeslots: []
+  },
   
   getLessons: function(weekday) {
     var lessonsInWeekday = _.filter(
@@ -83,9 +93,11 @@ Schedule.Schedule = Backbone.Model.extend({
   },
   
   getLesson: function(weekday, timeslot) {
-    var lessons = this.lessons.filter(function(lesson, index, self) {
-      if (lesson.weekday == weekday && lesson.timeslot == timeslot) { return true; }
-    });
+    var lessons = _.filter(
+      this.get('lessons'), 
+      function(lesson) {
+        if (lesson.get('weekday') == weekday && lesson.get('timeslot') == timeslot) { return true; }
+      });
     return lessons.length > 0 ? lessons[0] : null;
   },
   
