@@ -14,39 +14,26 @@ $(document).ready(function(){
     equal(timeslot.getEndHour(), 9, "End hour should be 9");
     equal(timeslot.getEndMinute(), 35, "End hour should be 35");
   });
-/*
+
   test("Hour and minute to date conversion", function() {
     equal(Schedule.hmToDate(22, 59).getHours(), 22, "Hour should be 22");
     equal(Schedule.hmToDate(22, 59).getMinutes(), 59, "Minute should be 59");
   });
   
   test("Lessons for weekday", function() {
-    var mon = Schedule.Weekday.create({id: "Mon", name: "Monday"});
-    var tue = Schedule.Weekday.create({id: "Tue", name: "Tuesday"});
+    var schedule = Schedule.Mock.schedule;
     
-    var t0 = Schedule.Timeslot.create({start: Schedule.hmToDate(8, 0), end: Schedule.hmToDate(8, 45)});
-    var t1 = Schedule.Timeslot.create({start: Schedule.hmToDate(8, 50), end: Schedule.hmToDate(9, 35)});
-
-    var math = Schedule.Subject.create({id: "math", name: "Math"});
-    var it = Schedule.Subject.create({id: "it", name: "Information technology"});
-
-    var schedule = Schedule.Schedule.create();
-    schedule.lessons = [
-      Schedule.Lesson.create({timeslot: t1, weekday: mon, subject: math}),
-      Schedule.Lesson.create({timeslot: t0, weekday: tue, subject: math}),
-      Schedule.Lesson.create({timeslot: t0, weekday: mon, subject: it})
-    ];
-    
-    var lMon = schedule.getLessons(mon);
+    var lMon = schedule.getLessons(Schedule.Mock.mon);
     equal(lMon.length, 2, "There should be 2 lessons on Mon");
-    equal(lMon[0].subject, it, "First lesson should be IT");
-    equal(lMon[1].subject, math, "Second lesson should be Math");
+    equal(lMon[0].get('subject'), Schedule.Mock.it, "First lesson should be IT");
+    equal(lMon[1].get('subject'), Schedule.Mock.math, "Second lesson should be Math");
 
-    var lTue = schedule.getLessons(tue);
+    var lTue = schedule.getLessons(Schedule.Mock.tue);
     equal(lTue.length, 1, "There should be 1 lesson on Tue");
-    equal(lTue[0].subject, math, "First lesson should be Math");
+    equal(lTue[0].get('subject'), Schedule.Mock.math, "First lesson should be Math");
   });
   
+/*
   test("Lesson for timeslot", function() {
     var mon = Schedule.Weekday.create({id: "Mon", name: "Monday"});
     var tue = Schedule.Weekday.create({id: "Tue", name: "Tuesday"});

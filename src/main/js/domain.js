@@ -1,19 +1,19 @@
 "use strict";
 
 Schedule.Subject = Backbone.Model.extend({
-  id: undefined,
-  name: undefined
+  id: null,
+  name: null
 });
 
 Schedule.Lesson = Backbone.Model.extend({
-  timeslot: undefined,
-  subject: undefined,
-  weekday: undefined
+  timeslot: null,
+  subject: null,
+  weekday: null
 });
 
 Schedule.Weekday = Backbone.Model.extend({
-  id: undefined,
-  name: undefined,
+  id: null,
+  name: null,
   hash: function() {
     return this.id;
   }
@@ -62,18 +62,22 @@ Schedule.compareTimeslots = function(t0, t1) {
 }
 
 Schedule.compareLessons = function(l0, l1) {
-  return Schedule.compareTimeslots(l0.getTimeslot(), l1.getTimeslot());
+  return Schedule.compareTimeslots(l0.get('timeslot'), l1.get('timeslot'));
 }
 
 Schedule.Schedule = Backbone.Model.extend({
-  id: undefined,
-  name: undefined,
+  id: null,
+  name: null,
   lessons: [],
   weekdays: [],
   timeslots: [],
   
   getLessons: function(weekday) {
-    var lessonsInWeekday = this.lessons.filterProperty('weekday', weekday);
+    var lessonsInWeekday = _.filter(
+      this.get('lessons'), 
+      function(lesson) {
+        return lesson.get('weekday') == weekday;
+      });
     lessonsInWeekday.sort(Schedule.compareLessons);
     return lessonsInWeekday;
   },
