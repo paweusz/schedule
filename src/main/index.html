@@ -21,11 +21,25 @@
     <script type="text/javascript" src="js/app.js"></script>
     <script type="text/javascript" src="js/domain.js"></script>
     <script type="text/javascript" charset="UTF-8" src="js/domain-factory.js"></script>
-    <!--script type="text/javascript" src="js/view.js"></script-->
+    <script type="text/javascript" src="js/view.js"></script>
     <!--script type="text/javascript" src="js/controller.js"></script-->
     <link href="css/main.css" rel="stylesheet">
   </head>
   <body>
+
+    <script type="text/template" id="schedule_template">
+      <h3>Plan lekcji: <%= scheduleName %></h3>
+      <table class="table table-striped">
+        <col span="3"></col>
+        <thead>
+          <tr>
+            <th colspan="3">Czas</th>
+          </tr>
+        </thead>
+        <tbody>
+        </tbody>
+      </table>
+    </script>
 
     <script type="text/x-handlebars" data-template-name="schedule">
       <table class="table table-striped">

@@ -106,7 +106,7 @@ Schedule.scheduleFactory = {
     var lessons = Schedule.lessonsFactory.createLessons(weekdays, subjects, timeslots);
     return new Schedule.Schedule({
       id: id,
-      name: "Plan lekcji",
+      name: "Patryk",
       lessons: lessons,
       weekdays: weekdays,
       timeslots: timeslots,

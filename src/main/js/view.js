@@ -1,59 +1,39 @@
 "use strict";
 
-Schedule.ScheduleView = Ember.View.extend({
-  templateName: 'schedule',
-  nameBinding: 'Schedule.scheduleController.name',
-  weekdaysBinding: 'Schedule.scheduleController.weekdays',
-  timeslotsBinding: 'Schedule.scheduleController.timeslots'
+Schedule.ScheduleView = Backbone.View.extend({
+  
+  schedule: null,
+  
+  render: function() {
+    var template = _.template( $("#schedule_template").html(), {
+      scheduleName: this.model.get('name')
+    });
+    this.$el.html( template );  
+  }
 });
 
-Schedule.TimeslotView = Ember.View.extend({
-  templateName: 'timeslot',
-  weekdaysBinding: 'Schedule.scheduleController.weekdays',
-  timeslot: null,
-  formatMinute: function(minute) {
+Schedule.TimeslotView = Backbone.View.extend((function(){
+
+  function formatMinute(minute) {
     return $.formatNumber(minute, {format:"00", locale:"us"});
-  },
-  start: function() {
+  };
+  
+  function getStart() {
     return this.get('timeslot').getStartHour() + ":" 
       + this.formatMinute(this.get('timeslot').getStartMinute());
-  }.property(),
-  end: function() {
+  };
+  
+  function getEnd() {
     return this.get('timeslot').getEndHour() + ":" 
       + this.formatMinute(this.get('timeslot').getEndMinute());
-  }.property()
-});
+  };
 
-Schedule.LessonView = Ember.View.extend({
-  templateName: 'lesson',
-  weekday: null,
-  lesson: undefined,
-  
-  getLesson: function() {
-    if (this.lesson == undefined) {
-      var timeslot = this.get("parentView").get("timeslot");
-      var weekday = this.get('weekday');
-      this.lesson = Schedule.scheduleController.getLesson(weekday, timeslot);
-    }
-    return this.lesson;
-  },
-  
-  lessonName: function() {
-    var lesson = this.getLesson();
-    return lesson != null ? lesson.subject.name : "";
-  }.property(),
-  
-  nextWeekdayCell: function() {
-    return Schedule.scheduleController.isNextWeekday(this.get('weekday'));
-  }.property()
-  
-});
+  function render() {
+  };
 
-Schedule.WeekdayView = Ember.View.extend({
-  weekday: null,
+  return {
+    render: render
+  }
+})());
 
-  nextWeekday: function() {
-    return Schedule.scheduleController.isNextWeekday(this.get('weekday'));
-  }.property()
-  
-});
+
