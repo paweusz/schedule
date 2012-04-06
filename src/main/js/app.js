@@ -2,12 +2,12 @@
 
 var Schedule = {};
 
-Schedule.App = {
+Schedule.app = {
   initialize: function() {
     
   }
 };
 
 $(document).ready(function(){
-  Schedule.App.initialize();
+  Schedule.app.initialize();
 });

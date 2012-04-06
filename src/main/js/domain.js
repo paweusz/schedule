@@ -79,7 +79,8 @@ Schedule.Schedule = Backbone.Model.extend({
     name: null,
     lessons: [],
     weekdays: [],
-    timeslots: []
+    timeslots: [],
+    subjects: []
   },
   
   getLessons: function(weekday) {
