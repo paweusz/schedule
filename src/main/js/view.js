@@ -2,38 +2,55 @@
 
 Schedule.ScheduleView = Backbone.View.extend({
   
-  schedule: null,
+  timeslotViews: null,
+  
+  initialize: function() {
+    this.timeslotViews = _.map(this.model.get('timeslots'), function(timeslot) {
+      return new Schedule.TimeslotView({
+        model: timeslot
+      });
+    });
+  },
   
   render: function() {
     var template = _.template( $("#schedule_template").html(), {
       scheduleName: this.model.get('name')
     });
-    this.$el.html( template );  
+    this.$el.html( template );
+    
+    _.each(this.timeslotViews, function(tsView) {
+      this.$el.find('tbody').append(tsView.render().el);
+    }, this);
   }
 });
 
-Schedule.TimeslotView = Backbone.View.extend((function(){
+Schedule.TimeslotView = Backbone.View.extend({
 
-  function formatMinute(minute) {
+  tagName: 'tr',
+
+  formatMinute: function(minute) {
     return $.formatNumber(minute, {format:"00", locale:"us"});
-  };
+  },
   
-  function getStart() {
-    return this.get('timeslot').getStartHour() + ":" 
-      + this.formatMinute(this.get('timeslot').getStartMinute());
-  };
+  getStart: function() {
+    return this.model.getStartHour() + ":" 
+      + this.formatMinute(this.model.getStartMinute());
+  },
   
-  function getEnd() {
-    return this.get('timeslot').getEndHour() + ":" 
-      + this.formatMinute(this.get('timeslot').getEndMinute());
-  };
+  getEnd: function() {
+    return this.model.getEndHour() + ":" 
+      + this.formatMinute(this.model.getEndMinute());
+  },
 
-  function render() {
-  };
+  render: function() {
+    var template = _.template( $("#timeslot_template").html(), {
+      start: this.getStart(),
+      end: this.getEnd()
+    });
+    this.$el.html( template );
+    return this;
+  },
 
-  return {
-    render: render
-  }
-})());
+});
 
 
