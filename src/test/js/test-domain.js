@@ -3,7 +3,7 @@
 $(document).ready(function(){
 
   module("Domain");
-
+/*
   test("Timeslot times", function() {
     var d0 = new Date(0, 0, 0, 8, 50), d1 = new Date(0, 0, 0, 9, 35);
     var timeslot = Schedule.Timeslot.create({
@@ -162,6 +162,6 @@ $(document).ready(function(){
     equal(schedule.getNextWeekday(
       new Date(2012, 3, 3, 21, 12)), mon, "Next weekday should be Mon");
   });
-
+*/
 });
 
