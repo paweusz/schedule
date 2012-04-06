@@ -1,23 +1,17 @@
 "use strict";
 
-Schedule.Subject = Ember.Object.extend({
+Schedule.Subject = Backbone.Model.extend({
   id: undefined,
   name: undefined
 });
 
-Schedule.Lesson = Ember.Object.extend({
+Schedule.Lesson = Backbone.Model.extend({
   timeslot: undefined,
   subject: undefined,
-  weekday: undefined,
-  getTimeslot: function() {
-    return this.timeslot;
-  },
-  getWeekday: function() {
-    return this.weekday;
-  }
+  weekday: undefined
 });
 
-Schedule.Weekday = Ember.Object.extend({
+Schedule.Weekday = Backbone.Model.extend({
   id: undefined,
   name: undefined,
   hash: function() {
@@ -25,28 +19,24 @@ Schedule.Weekday = Ember.Object.extend({
   }
 });
 
-Schedule.Timeslot = Ember.Object.extend({
-  start: undefined,
-  end: undefined,
+Schedule.Timeslot = Backbone.Model.extend({
+  start: null,
+  end: null,
 
   getStartHour: function() {
-    return this.start.getHours();
+    return this.get('start').getHours();
   },
   
   getStartMinute: function() {
-    return this.start.getMinutes();
+    return this.get('start').getMinutes();
   },
   
   getEndHour: function() {
-    return this.end.getHours();
+    return this.get('end').getHours();
   },
   
   getEndMinute: function() {
-    return this.end.getMinutes();
-  },
-  
-  getEnd: function() {
-    return this.end;
+    return this.get('end').getMinutes();
   },
   
   hash: function() {
@@ -75,16 +65,12 @@ Schedule.compareLessons = function(l0, l1) {
   return Schedule.compareTimeslots(l0.getTimeslot(), l1.getTimeslot());
 }
 
-Schedule.Schedule = Ember.Object.extend({
+Schedule.Schedule = Backbone.Model.extend({
   id: undefined,
   name: undefined,
   lessons: [],
   weekdays: [],
   timeslots: [],
-  
-  getAllLessons: function() {
-    return this.lessons;
-  },
   
   getLessons: function(weekday) {
     var lessonsInWeekday = this.lessons.filterProperty('weekday', weekday);
@@ -99,18 +85,6 @@ Schedule.Schedule = Ember.Object.extend({
     return lessons.length > 0 ? lessons[0] : null;
   },
   
-  getWeekdays: function() {
-    return this.weekdays;
-  },
-  
-  getTimeslots: function() {
-    return this.timeslots;
-  },
-  
-  getName: function() {
-    return this.name;
-  },
-
   getNextWeekday: function(currentTs) {
     var dow = currentTs.getDay();
     if (dow == 0) {
