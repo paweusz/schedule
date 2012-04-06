@@ -39,9 +39,9 @@ Schedule.subjectsFactory = {
   }
 };
 
-Schedule.lessonsFactory = {
+Schedule.lessonsFactory = (function() {
 
-  loadLessonTOs: function() {
+  function loadLessonTOs() {
     return [
       {timeslot: 1, subjectId: "EW", weekdayId: "Mon"},
       {timeslot: 2, subjectId: "EW", weekdayId: "Mon"},
@@ -71,11 +71,9 @@ Schedule.lessonsFactory = {
       {timeslot: 5, subjectId: "EW", weekdayId: "Fri"},
       {timeslot: 6, subjectId: "EW", weekdayId: "Fri"}
     ];
-  },
+  };
   
-  createLessons: function(weekdays, subjects, timeslots) {
-    var lessonTOs = this.loadLessonTOs();
-  
+  function createLessons(weekdays, subjects, timeslots) {
     var subjectsHash = {};
     _.each(subjects, function(subject) {
       subjectsHash[subject.id] = subject;
@@ -86,7 +84,7 @@ Schedule.lessonsFactory = {
       weekdaysHash[weekday.id] = weekday;
     });
     
-    return _.map(lessonTOs, function(lessonTO) {
+    return _.map(loadLessonTOs(), function(lessonTO) {
       return new Schedule.Lesson({
         timeslot: timeslots[lessonTO.timeslot - 1],
         subject: subjectsHash[lessonTO.subjectId],
@@ -94,7 +92,11 @@ Schedule.lessonsFactory = {
       });
     });
   }
-}
+
+  return {
+    createLessons: createLessons
+  };
+})();
 
 Schedule.scheduleFactory = {
   createSchedule: function(id) {
