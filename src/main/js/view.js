@@ -15,7 +15,8 @@ Schedule.ScheduleView = Backbone.View.extend({
   
   render: function() {
     var template = _.template( $("#schedule_template").html(), {
-      scheduleName: this.model.get('name')
+      scheduleName: this.model.get('name'),
+      weekdays: this.model.get('weekdays')
     });
     this.$el.html( template );
     

@@ -31,9 +31,15 @@
       <h3>Plan lekcji: <%= scheduleName %></h3>
       <table class="table table-striped">
         <col span="3"></col>
+        <% _(weekdays).each(function() { %>
+          <col class="nextWeekday"></col>
+        <%}); %>
         <thead>
           <tr>
             <th colspan="3">Czas</th>
+            <% _(weekdays).each(function(weekday) { %>
+              <th><%= weekday.get('name') %></th>
+            <%}); %>
           </tr>
         </thead>
         <tbody>
