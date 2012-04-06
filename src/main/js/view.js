@@ -7,9 +7,10 @@ Schedule.ScheduleView = Backbone.View.extend({
   initialize: function() {
     this.timeslotViews = _.map(this.model.get('timeslots'), function(timeslot) {
       return new Schedule.TimeslotView({
-        model: timeslot
+        model: timeslot,
+        schedule: this.model
       });
-    });
+    }, this);
   },
   
   render: function() {
@@ -43,11 +44,24 @@ Schedule.TimeslotView = Backbone.View.extend({
   },
 
   render: function() {
+    var schedule = this.options.schedule;
+    
     var template = _.template( $("#timeslot_template").html(), {
       start: this.getStart(),
       end: this.getEnd()
     });
     this.$el.html( template );
+
+    _(schedule.get('weekdays')).each(function(weekday) {
+      var td = document.createElement('td');
+      this.$el.append(td);
+      var lesson = schedule.getLesson(weekday, this.model);
+      if (lesson != null) {
+        var subjectName = lesson.get('subject').get('name');
+        $(td).text(subjectName);
+      }
+    }, this);    
+    
     return this;
   },
 
