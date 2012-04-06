@@ -96,13 +96,13 @@ Schedule.Schedule = Backbone.Model.extend({
     }
     dow--;
     var weekday = null;
-    var weekdays = this.getWeekdays();
+    var weekdays = this.get('weekdays');
     if (dow > weekdays.length) {
       weekday = weekdays[0];
     } else {
       var lessons = this.getLessons(weekdays[dow]);
       var lastLesson = lessons[lessons.length - 1];
-      var lastLessonTs = lastLesson.getTimeslot().getEnd();
+      var lastLessonTs = lastLesson.get('timeslot').get('end');
       if (Schedule.hmToDate(currentTs.getHours(), currentTs.getMinutes()) > lastLessonTs) {
         if (dow + 1 >= weekdays.length) {
           weekday = weekdays[0];

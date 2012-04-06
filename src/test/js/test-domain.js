@@ -33,28 +33,13 @@ $(document).ready(function(){
     equal(lTue[0].get('subject'), Schedule.Mock.math, "First lesson should be Math");
   });
   
-/*
   test("Lesson for timeslot", function() {
-    var mon = Schedule.Weekday.create({id: "Mon", name: "Monday"});
-    var tue = Schedule.Weekday.create({id: "Tue", name: "Tuesday"});
+    var schedule = Schedule.Mock.schedule;
     
-    var t0 = Schedule.Timeslot.create({start: Schedule.hmToDate(8, 0), end: Schedule.hmToDate(8, 45)});
-    var t1 = Schedule.Timeslot.create({start: Schedule.hmToDate(8, 50), end: Schedule.hmToDate(9, 35)});
-
-    var math = Schedule.Subject.create({id: "math", name: "Math"});
-    var it = Schedule.Subject.create({id: "it", name: "Information technology"});
-
-    var schedule = Schedule.Schedule.create();
-    schedule.lessons = [
-      Schedule.Lesson.create({timeslot: t1, weekday: mon, subject: math}),
-      Schedule.Lesson.create({timeslot: t0, weekday: tue, subject: math}),
-      Schedule.Lesson.create({timeslot: t0, weekday: mon, subject: it})
-    ];
-    
-    equal(schedule.getLesson(mon, t0), schedule.lessons[2], "First lesson on Mon should be IT");
-    equal(schedule.getLesson(mon, t1), schedule.lessons[0], "Second lesson on Mon should be Math");
-    equal(schedule.getLesson(tue, t0), schedule.lessons[1], "First lesson on Tue should be Math");
-    equal(schedule.getLesson(tue, t1), null, "There is no second lesson on Tue");
+    equal(schedule.getLesson(Schedule.Mock.mon, Schedule.Mock.t0), schedule.lessons[2], "First lesson on Mon should be IT");
+    equal(schedule.getLesson(Schedule.Mock.mon, Schedule.Mock.t1), schedule.lessons[0], "Second lesson on Mon should be Math");
+    equal(schedule.getLesson(Schedule.Mock.tue, Schedule.Mock.t0), schedule.lessons[1], "First lesson on Tue should be Math");
+    equal(schedule.getLesson(Schedule.Mock.tue, Schedule.Mock.t1), null, "There is no second lesson on Tue");
   });
   
   test("Signum function", function() {
@@ -66,19 +51,19 @@ $(document).ready(function(){
   });
   
   test("Timeslot comparison", function() {
-    var t0 = Schedule.Timeslot.create({
+    var t0 = new Schedule.Timeslot({
       start: new Date(0, 0, 0, 12, 10),
       end:   new Date(0, 0, 0, 12, 20)
     });
-    var t1 = Schedule.Timeslot.create({
+    var t1 = new Schedule.Timeslot({
       start: new Date(0, 0, 0, 12, 20),
       end:   new Date(0, 0, 0, 13, 10)
     });
-    var t2 = Schedule.Timeslot.create({
+    var t2 = new Schedule.Timeslot({
       start: new Date(0, 0, 0, 13, 10),
       end:   new Date(0, 0, 0, 14, 0)
     });
-    var t3 = Schedule.Timeslot.create({
+    var t3 = new Schedule.Timeslot({
       start: new Date(0, 0, 0, 13, 10),
       end:   new Date(0, 0, 0, 14, 0)
     });
@@ -91,19 +76,19 @@ $(document).ready(function(){
   });
 
   test("Lesson comparison", function() {
-    var t0 = Schedule.Timeslot.create({
+    var t0 = new Schedule.Timeslot({
       start: new Date(0, 0, 0, 12, 10),
       end:   new Date(0, 0, 0, 12, 20)
     });
-    var t1 = Schedule.Timeslot.create({
+    var t1 = new Schedule.Timeslot({
       start: new Date(0, 0, 0, 13, 10),
       end:   new Date(0, 0, 0, 14, 0)
     });
-    var day = Schedule.Weekday.create({id: "day", name: "Day"});
-    var subject = Schedule.Subject.create({id: "subject", name: "Subject"});
+    var day = new Schedule.Weekday({id: "day", name: "Day"});
+    var subject = new Schedule.Subject({id: "subject", name: "Subject"});
 
-    var l0 = Schedule.Lesson.create({timeslot: t0, weekday: day, subject: subject});
-    var l1 = Schedule.Lesson.create({timeslot: t1, weekday: day, subject: subject});
+    var l0 = new Schedule.Lesson({timeslot: t0, weekday: day, subject: subject});
+    var l1 = new Schedule.Lesson({timeslot: t1, weekday: day, subject: subject});
 
     equal(Schedule.compareLessons(l0, l0), 0, "Lessons should be eqal");
     equal(Schedule.compareLessons(l0, l1), -1, "First lesson should be lesser than second");
@@ -111,28 +96,28 @@ $(document).ready(function(){
   });
 
   test("Next weekday calculation", function() {
-    var mon = Schedule.Weekday.create({id: "Mon", name: "Monday"});
-    var tue = Schedule.Weekday.create({id: "Tue", name: "Tuesday"});
+    var mon = new Schedule.Weekday({id: "Mon", name: "Monday"});
+    var tue = new Schedule.Weekday({id: "Tue", name: "Tuesday"});
     var weekdays = [mon, tue];
 
-    var t0 = Schedule.Timeslot.create({
+    var t0 = new Schedule.Timeslot({
       start: new Date(0, 0, 0, 12, 10),
       end:   new Date(0, 0, 0, 12, 20)
     });
-    var t1 = Schedule.Timeslot.create({
+    var t1 = new Schedule.Timeslot({
       start: new Date(0, 0, 0, 12, 20),
       end:   new Date(0, 0, 0, 13, 10)
     });
 
-    var math = Schedule.Subject.create({id: "math", name: "Math"});
-    var it = Schedule.Subject.create({id: "it", name: "Information technology"});
+    var math = new Schedule.Subject({id: "math", name: "Math"});
+    var it = new Schedule.Subject({id: "it", name: "Information technology"});
 
     var lessons = [
-      Schedule.Lesson.create({timeslot: t1, weekday: mon, subject: math}),
-      Schedule.Lesson.create({timeslot: t0, weekday: tue, subject: math}),
-      Schedule.Lesson.create({timeslot: t0, weekday: mon, subject: it})
+      new Schedule.Lesson({timeslot: t1, weekday: mon, subject: math}),
+      new Schedule.Lesson({timeslot: t0, weekday: tue, subject: math}),
+      new Schedule.Lesson({timeslot: t0, weekday: mon, subject: it})
     ];
-    var schedule = Schedule.Schedule.create({
+    var schedule = new Schedule.Schedule({
       weekdays: weekdays,
       lessons: lessons
     });
@@ -149,6 +134,6 @@ $(document).ready(function(){
     equal(schedule.getNextWeekday(
       new Date(2012, 3, 3, 21, 12)), mon, "Next weekday should be Mon");
   });
-*/
+
 });
 
