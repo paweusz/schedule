@@ -3,6 +3,7 @@
 Schedule.ScheduleView = Backbone.View.extend({
   
   timeslotViews: null,
+  columnsView: null,
   
   initialize: function() {
     this.timeslotViews = _.map(this.model.get('timeslots'), function(timeslot) {
@@ -11,6 +12,11 @@ Schedule.ScheduleView = Backbone.View.extend({
         schedule: this.model
       });
     }, this);
+    this.columnsView = new Schedule.ColumnsView({
+      model: this.model.get('weekdays'),
+      schedule: this.model,
+      ts: new Date()
+    });
   },
   
   render: function() {
@@ -23,7 +29,32 @@ Schedule.ScheduleView = Backbone.View.extend({
     _.each(this.timeslotViews, function(tsView) {
       this.$el.find('tbody').append(tsView.render().el);
     }, this);
+    
+    this.$el.find('table').prepend(this.columnsView.render().$el.children());
   }
+});
+
+Schedule.ColumnsView = Backbone.View.extend({
+
+  initialize: function() {
+    _.bind(this.isNextWeekday, this);
+  },
+
+  isNextWeekday: function(weekday) {
+    var schedule = this.options.schedule;
+    return weekday == schedule.getNextWeekday(this.options.ts);
+  },
+  
+  render: function() {
+    var template = _.template( $("#columns_template").html(), {
+      weekdays: this.model,
+      view: this
+    });
+    this.$el.html( template );
+
+    return this;
+  }
+  
 });
 
 Schedule.TimeslotView = Backbone.View.extend({

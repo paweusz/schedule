@@ -30,10 +30,6 @@
     <script type="text/template" id="schedule_template">
       <h3>Plan lekcji: <%= scheduleName %></h3>
       <table class="table table-striped">
-        <col span="3"></col>
-        <% _(weekdays).each(function() { %>
-          <col class="nextWeekday"></col>
-        <%}); %>
         <thead>
           <tr>
             <th colspan="3">Czas</th>
@@ -47,35 +43,17 @@
       </table>
     </script>
 
+    <script type="text/template" id="columns_template">
+      <col span="3"></col>
+      <% _(weekdays).each(function(weekday) { %>
+        <col class="<%= view.isNextWeekday(weekday) ? 'next-weekday' : '' %>"></col>
+      <%}); %>
+    </script>
+
     <script type="text/template" id="timeslot_template">
       <td><%= start %></td>
       <td>&ndash;</td>
       <td><%= end %></td>
-    </script>
-
-    <script type="text/x-handlebars" data-template-name="schedule">
-      <table class="table table-striped">
-        <caption>{{name}}</caption>
-        <col span="3"></col>
-        {{#each weekdays}}
-          {{#view Schedule.WeekdayView weekdayBinding="this"}}
-            <col {{bindAttr class="nextWeekday"}}></col>
-          {{/view}}
-        {{/each}}
-        <thead>
-          <tr>
-            <th colspan="3">Czas</th>
-            {{#each weekdays}}
-            <th>{{name}}</th>
-            {{/each}}
-          </tr>
-        </thead>
-        <tbody>
-          {{#each timeslots}}
-            {{view Schedule.TimeslotView timeslotBinding="this"}}
-          {{/each}}
-        </tbody>
-      </table>
     </script>
 
     <script type="text/x-handlebars" data-template-name="timeslot">
