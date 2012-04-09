@@ -59,21 +59,6 @@
       <% }) %>
     </script>
 
-    <script type="text/x-handlebars" data-template-name="timeslot">
-      <tr>
-        <td>{{start}}</td>
-        <td>&ndash;</td>
-        <td>{{end}}</td>
-        {{#each weekdays}}
-          {{view Schedule.LessonView weekdayBinding="this"}}
-        {{/each}}
-      </tr>
-    </script>
-
-    <script type="text/x-handlebars" data-template-name="lesson">
-      <td {{bindAttr class="nextWeekdayCell"}}>{{lessonName}}</td>
-    </script>
-
     <div id="container">
     </div>
 
