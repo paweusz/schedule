@@ -54,6 +54,9 @@
       <td><%= start %></td>
       <td>&ndash;</td>
       <td><%= end %></td>
+      <% _(weekdays).each(function(weekday) { %>
+        <td><%= view.getLessonName(weekday) %></td>
+      <% }) %>
     </script>
 
     <script type="text/x-handlebars" data-template-name="timeslot">

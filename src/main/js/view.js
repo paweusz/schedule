@@ -75,24 +75,25 @@ Schedule.TimeslotView = Backbone.View.extend({
       + this.formatMinute(this.model.getEndMinute());
   },
 
+  getLessonName: function(weekday) {
+    var schedule = this.options.schedule;
+    var lessonName = "";
+    var lesson = schedule.getLesson(weekday, this.model);
+    if (lesson != null) {
+      lessonName = lesson.get('subject').get('name');
+    }
+    return lessonName;
+  },
+
   render: function() {
     var schedule = this.options.schedule;
-    
     var template = _.template( $("#timeslot_template").html(), {
       start: this.getStart(),
-      end: this.getEnd()
+      end: this.getEnd(),
+      weekdays: schedule.get('weekdays'),
+      view: this
     });
     this.$el.html( template );
-
-    _(schedule.get('weekdays')).each(function(weekday) {
-      var td = document.createElement('td');
-      this.$el.append(td);
-      var lesson = schedule.getLesson(weekday, this.model);
-      if (lesson != null) {
-        var subjectName = lesson.get('subject').get('name');
-        $(td).text(subjectName);
-      }
-    }, this);    
     
     return this;
   },
