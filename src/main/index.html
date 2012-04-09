@@ -55,7 +55,7 @@
       <td>&ndash;</td>
       <td><%= end %></td>
       <% _(weekdays).each(function(weekday) { %>
-        <td><%= view.getLessonName(weekday) %></td>
+        <td class="<%= view.isNextWeekday(weekday) ? 'next-weekday-cell' : '' %>"><%= view.getLessonName(weekday) %></td>
       <% }) %>
     </script>
 
