@@ -8,7 +8,7 @@ Schedule.ScheduleView = Backbone.View.extend({
   initialize: function() {
     var ts = new Date();
     
-    this.timeslotViews = _.map(this.model.get('timeslots'), function(timeslot) {
+    this.timeslotViews = this.model.get('timeslots').map(function(timeslot) {
       return new Schedule.TimeslotView({
         model: timeslot,
         schedule: this.model,

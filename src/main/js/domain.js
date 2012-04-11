@@ -53,6 +53,22 @@ Schedule.Timeslot = Backbone.Model.extend({
   
 });
 
+Schedule.Lessons = Backbone.Collection.extend({
+  model: Schedule.Lessons
+});
+
+Schedule.Weekdays = Backbone.Collection.extend({
+  model: Schedule.Weekday
+});
+
+Schedule.Timeslots = Backbone.Collection.extend({
+  model: Schedule.Timeslot
+});
+
+Schedule.Subjects = Backbone.Collection.extend({
+  model: Schedule.Subject
+});
+
 Schedule.hmToDate = function(hour, minute) {
   return new Date(0, 0, 0, hour, minute);
 }
@@ -77,15 +93,15 @@ Schedule.Schedule = Backbone.Model.extend({
   defaults: {
     id: null,
     name: null,
-    lessons: [],
-    weekdays: [],
-    timeslots: [],
-    subjects: []
+    lessons: null,
+    weekdays: null,
+    timeslots: null,
+    subjects: null
   },
   
   getLessons: function(weekday) {
-    var lessonsInWeekday = _.filter(
-      this.get('lessons'), 
+    var lessons = this.get('lessons');
+    var lessonsInWeekday = this.get('lessons').filter(
       function(lesson) {
         return lesson.get('weekday') == weekday;
       });
@@ -94,8 +110,7 @@ Schedule.Schedule = Backbone.Model.extend({
   },
   
   getLesson: function(weekday, timeslot) {
-    var lessons = _.filter(
-      this.get('lessons'), 
+    var lessons = this.get('lessons').filter(
       function(lesson) {
         if (lesson.get('weekday') == weekday && lesson.get('timeslot') == timeslot) { return true; }
       });
@@ -111,19 +126,19 @@ Schedule.Schedule = Backbone.Model.extend({
     var weekday = null;
     var weekdays = this.get('weekdays');
     if (dow > weekdays.length) {
-      weekday = weekdays[0];
+      weekday = weekdays.first();
     } else {
-      var lessons = this.getLessons(weekdays[dow]);
+      var lessons = this.getLessons(weekdays.models[dow]);
       var lastLesson = lessons[lessons.length - 1];
       var lastLessonTs = lastLesson.get('timeslot').get('end');
       if (Schedule.hmToDate(currentTs.getHours(), currentTs.getMinutes()) > lastLessonTs) {
         if (dow + 1 >= weekdays.length) {
-          weekday = weekdays[0];
+          weekday = weekdays.first();
         } else {
-          weekday = weekdays[dow + 1];
+          weekday = weekdays.models[dow + 1];
         }
       } else {
-        weekday = weekdays[dow];
+        weekday = weekdays.models[dow];
       }
     }
     return weekday;

@@ -36,10 +36,16 @@ $(document).ready(function(){
   test("Lesson for timeslot", function() {
     var schedule = Schedule.Mock.schedule;
     
-    equal(schedule.getLesson(Schedule.Mock.mon, Schedule.Mock.t0), schedule.get('lessons')[2], "First lesson on Mon should be IT");
-    equal(schedule.getLesson(Schedule.Mock.mon, Schedule.Mock.t1), schedule.get('lessons')[0], "Second lesson on Mon should be Math");
-    equal(schedule.getLesson(Schedule.Mock.tue, Schedule.Mock.t0), schedule.get('lessons')[1], "First lesson on Tue should be Math");
-    equal(schedule.getLesson(Schedule.Mock.tue, Schedule.Mock.t1), null, "There is no second lesson on Tue");
+    equal(schedule.getLesson(Schedule.Mock.mon, Schedule.Mock.t0), 
+      schedule.get('lessons').get(3), "First lesson on Mon should be IT");
+    ok(schedule.getLesson(Schedule.Mock.mon, Schedule.Mock.t0) != undefined, 
+      "Lesson should not be undefined");
+    equal(schedule.getLesson(Schedule.Mock.mon, Schedule.Mock.t1), 
+      schedule.get('lessons').get(1), "Second lesson on Mon should be Math");
+    equal(schedule.getLesson(Schedule.Mock.tue, Schedule.Mock.t0), 
+      schedule.get('lessons').get(2), "First lesson on Tue should be Math");
+    equal(schedule.getLesson(Schedule.Mock.tue, Schedule.Mock.t1), 
+      null, "There is no second lesson on Tue");
   });
   
   test("Signum function", function() {
@@ -96,43 +102,20 @@ $(document).ready(function(){
   });
 
   test("Next weekday calculation", function() {
-    var mon = new Schedule.Weekday({id: "Mon", name: "Monday"});
-    var tue = new Schedule.Weekday({id: "Tue", name: "Tuesday"});
-    var weekdays = [mon, tue];
+    var schedule = Schedule.Mock.schedule;
 
-    var t0 = new Schedule.Timeslot({
-      start: new Date(0, 0, 0, 12, 10),
-      end:   new Date(0, 0, 0, 12, 20)
-    });
-    var t1 = new Schedule.Timeslot({
-      start: new Date(0, 0, 0, 12, 20),
-      end:   new Date(0, 0, 0, 13, 10)
-    });
-
-    var math = new Schedule.Subject({id: "math", name: "Math"});
-    var it = new Schedule.Subject({id: "it", name: "Information technology"});
-
-    var lessons = [
-      new Schedule.Lesson({timeslot: t1, weekday: mon, subject: math}),
-      new Schedule.Lesson({timeslot: t0, weekday: tue, subject: math}),
-      new Schedule.Lesson({timeslot: t0, weekday: mon, subject: it})
-    ];
-    var schedule = new Schedule.Schedule({
-      weekdays: weekdays,
-      lessons: lessons
-    });
     equal(schedule.getNextWeekday(
-      new Date(2012, 3, 1, 15, 12)), mon, "Next weekday should be Mon");
+      new Date(2012, 3, 1, 15, 12)), Schedule.Mock.mon, "Next weekday should be Mon");
     equal(schedule.getNextWeekday(
-      new Date(2012, 3, 2, 21, 12)), tue, "Next weekday should be Tue");
+      new Date(2012, 3, 2, 21, 12)), Schedule.Mock.tue, "Next weekday should be Tue");
     equal(schedule.getNextWeekday(
-      new Date(2012, 3, 2, 10, 12)), mon, "Next weekday should be Mon");
+      new Date(2012, 3, 2, 8, 47)), Schedule.Mock.mon, "Next weekday should be Mon");
     equal(schedule.getNextWeekday(
-      new Date(2012, 3, 2, 5, 10)), mon, "Next weekday should be Mon");
+      new Date(2012, 3, 2, 5, 10)), Schedule.Mock.mon, "Next weekday should be Mon");
     equal(schedule.getNextWeekday(
-      new Date(2012, 3, 3, 10, 12)), tue, "Next weekday should be Tue");
+      new Date(2012, 3, 3, 7, 12)), Schedule.Mock.tue, "Next weekday should be Tue");
     equal(schedule.getNextWeekday(
-      new Date(2012, 3, 3, 21, 12)), mon, "Next weekday should be Mon");
+      new Date(2012, 3, 3, 21, 12)), Schedule.Mock.mon, "Next weekday should be Mon");
   });
 
 });

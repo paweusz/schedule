@@ -33,7 +33,7 @@
         <thead>
           <tr>
             <th colspan="3">Czas</th>
-            <% _(weekdays).each(function(weekday) { %>
+            <% weekdays.each(function(weekday) { %>
               <th><%= weekday.get('name') %></th>
             <%}); %>
           </tr>
@@ -45,7 +45,7 @@
 
     <script type="text/template" id="columns_template">
       <col span="3"></col>
-      <% _(weekdays).each(function(weekday) { %>
+      <% weekdays.each(function(weekday) { %>
         <col class="<%= view.isNextWeekday(weekday) ? 'next-weekday' : '' %>"></col>
       <%}); %>
     </script>
@@ -54,7 +54,7 @@
       <td><%= start %></td>
       <td>&ndash;</td>
       <td><%= end %></td>
-      <% _(weekdays).each(function(weekday) { %>
+      <% weekdays.each(function(weekday) { %>
         <td class="<%= view.isNextWeekday(weekday) ? 'next-weekday-cell' : '' %>"><%= view.getLessonName(weekday) %></td>
       <% }) %>
     </script>

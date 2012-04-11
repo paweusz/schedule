@@ -7,19 +7,19 @@ $(document).ready(function(){
   test("Timeslots factory", function() {
     var timeslots = Schedule.timeslotsFactory.createTimeslots();
     ok(timeslots.length > 0, "Timeslots should be created");
-    ok(timeslots[0] instanceof Schedule.Timeslot, "Collection should contain timeslots");
+    ok(timeslots.get(1) instanceof Schedule.Timeslot, "Collection should contain timeslots");
   });
 
   test("Weekdays factory", function() {
     var weekdays = Schedule.weekdaysFactory.createWeekdays();
     ok(weekdays.length > 0, "Weekdays should be created");
-    ok(weekdays[0] instanceof Schedule.Weekday, "Collection should contain weekdays");
+    ok(weekdays.get("Mon") instanceof Schedule.Weekday, "Collection should contain weekdays");
   });
 
   test("Subjects factory", function() {
     var subjects = Schedule.subjectsFactory.createSubjects();
     ok(subjects.length > 0, "Subjects should be created");
-    ok(subjects[0] instanceof Schedule.Subject, "Collection should contain subjects");
+    ok(subjects.get("ang") instanceof Schedule.Subject, "Collection should contain subjects");
   });
 
   test("Lessons factory", function() {
@@ -28,7 +28,11 @@ $(document).ready(function(){
     var timeslots = Schedule.timeslotsFactory.createTimeslots();
     var lessons = Schedule.lessonsFactory.createLessons(weekdays, subjects, timeslots);
     ok(lessons.length > 0, "Lessons should be created");
-    ok(lessons[0] instanceof Schedule.Lesson, "Collection should contain lessons");
+    var lesson = lessons.get(1);
+    ok(lesson instanceof Schedule.Lesson, "Collection should contain lessons");
+    equal(lesson.get('timeslot'), timeslots.get(1), "Lesson should be on first timeslot");
+    equal(lesson.get('weekday'), weekdays.get("Mon"), "Lesson should be on Monday");
+    equal(lesson.get('subject'), subjects.get("EW"), "Lessons subject should be EW");
   });
 
   test("Schedule loading", function() {
