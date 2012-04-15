@@ -7,6 +7,8 @@ import java.util.Date
 import java.util.Calendar
 import java.util.GregorianCalendar
 import java.lang.Long
+import org.codehaus.jackson.JsonFactory
+import org.codehaus.jackson.JsonParser
 
 object Application extends Controller {
   
@@ -48,7 +50,7 @@ object Application extends Controller {
     def toDateString(hour: Int, minute: Int): String = toString(toDate(hour, minute))
     val timeslotsJson = toJson {
       Seq(
-		  Map("id" -> toJson(1), "start" -> new JsObject(toDateString(8, 0)), "end" -> toJson(toDateString(8, 45))),
+		  Map("id" -> toJson(1), "start" -> toJson(toDateString(8, 0)), "end" -> toJson(toDateString(8, 45))),
 		  Map("id" -> toJson(2), "start" -> toJson(toDateString(8, 50)), "end" -> toJson(toDateString(9, 35))),
 		  Map("id" -> toJson(3), "start" -> toJson(toDateString(9, 45)), "end" -> toJson(toDateString(10, 30))),
 		  Map("id" -> toJson(4), "start" -> toJson(toDateString(10, 40)), "end" -> toJson(toDateString(11, 25))),
