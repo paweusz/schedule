@@ -1,8 +1,12 @@
 package controllers
 
-import play.api._
-import play.api.mvc._
-import play.api.libs.json.Json._
+import play.api.libs.json.Json.toJson
+import play.api.mvc.Action
+import play.api.mvc.Controller
+import java.util.Date
+import java.util.Calendar
+import java.util.GregorianCalendar
+import java.lang.Long
 
 object Application extends Controller {
   
@@ -38,4 +42,24 @@ object Application extends Controller {
     Ok(subjectsJson).as("application/json")
   }
 
+  def timeslots = Action {
+    def toDate(hour: Int, minute: Int): Date = new GregorianCalendar(0, 0, 0, hour, minute).getTime()
+    def toString(d: Date): String = String.format("\\/Date(%d)\\/", new Long(d.getTime()))
+    def toDateString(hour: Int, minute: Int): String = toString(toDate(hour, minute))
+    val timeslotsJson = toJson {
+      Seq(
+		  Map("id" -> toJson(1), "start" -> new JsObject(toDateString(8, 0)), "end" -> toJson(toDateString(8, 45))),
+		  Map("id" -> toJson(2), "start" -> toJson(toDateString(8, 50)), "end" -> toJson(toDateString(9, 35))),
+		  Map("id" -> toJson(3), "start" -> toJson(toDateString(9, 45)), "end" -> toJson(toDateString(10, 30))),
+		  Map("id" -> toJson(4), "start" -> toJson(toDateString(10, 40)), "end" -> toJson(toDateString(11, 25))),
+		  Map("id" -> toJson(5), "start" -> toJson(toDateString(11, 45)), "end" -> toJson(toDateString(12, 30))),
+		  Map("id" -> toJson(6), "start" -> toJson(toDateString(12, 45)), "end" -> toJson(toDateString(13, 30))),
+		  Map("id" -> toJson(7), "start" -> toJson(toDateString(13, 35)), "end" -> toJson(toDateString(14, 20))),
+		  Map("id" -> toJson(8), "start" -> toJson(toDateString(14, 25)), "end" -> toJson(toDateString(15, 10)))
+      )
+    }
+    
+    Ok(timeslotsJson).as("application/json")
+  }
+  
 }
