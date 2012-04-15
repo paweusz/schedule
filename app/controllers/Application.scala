@@ -2,7 +2,7 @@ package controllers
 
 import play.api._
 import play.api.mvc._
-import play.api.libs.json._
+import play.api.libs.json.Json._
 
 object Application extends Controller {
   
@@ -11,13 +11,13 @@ object Application extends Controller {
   }
 
   def weekdays = Action {
-    val weekdaysJson = Json.toJson(
+    val weekdaysJson = toJson(
       Seq(
-        Map("id" -> Json.toJson("Mon"), "name" -> Json.toJson("Poniedziałek")),
-        Map("id" -> Json.toJson("Tue"), "name" -> Json.toJson("Wtorek")),
-        Map("id" -> Json.toJson("Wed"), "name" -> Json.toJson("Środa")),
-        Map("id" -> Json.toJson("Thu"), "name" -> Json.toJson("Czwartek")),
-        Map("id" -> Json.toJson("Fri"), "name" -> Json.toJson("Piątek"))
+        Map("id" -> toJson("Mon"), "name" -> toJson("Poniedziałek")),
+        Map("id" -> toJson("Tue"), "name" -> toJson("Wtorek")),
+        Map("id" -> toJson("Wed"), "name" -> toJson("Środa")),
+        Map("id" -> toJson("Thu"), "name" -> toJson("Czwartek")),
+        Map("id" -> toJson("Fri"), "name" -> toJson("Piątek"))
       )
     )
 
