@@ -24,4 +24,18 @@ object Application extends Controller {
     Ok(weekdaysJson).as("application/json")
   }
   
+  def subjects = Action {
+    val subjectsJson = toJson{
+      Seq(
+		  Map("id" -> toJson("EW"), "name" -> toJson("Edukacja Wczesnoszkolna")),
+		  Map("id" -> toJson("rel"), "name" -> toJson("Religia")),
+		  Map("id" -> toJson("inf"), "name" -> toJson("Informatyka")),
+		  Map("id" -> toJson("EWsg"), "name" -> toJson("Wychowanie fizyczne")),
+		  Map("id" -> toJson("ang"), "name" -> toJson("Język angielski"))
+      )
+    }
+    
+    Ok(subjectsJson).as("application/json")
+  }
+
 }
