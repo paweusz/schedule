@@ -91,7 +91,13 @@ Schedule.lessonsFactory = (function() {
 
 Schedule.scheduleFactory = {
   createSchedule: function(id) {
-    var weekdays = Schedule.weekdaysFactory.createWeekdays();
+//    var weekdays = Schedule.weekdaysFactory.createWeekdays();
+    var weekdays = new Schedule.Weekdays;
+    weekdays.fetch({
+      success: function(collection, response) {
+        console.log(response);
+      }
+    });
     var subjects = Schedule.subjectsFactory.createSubjects();
     var timeslots = Schedule.timeslotsFactory.createTimeslots();
     var lessons = Schedule.lessonsFactory.createLessons(weekdays, subjects, timeslots);
