@@ -25,6 +25,7 @@ app.configure('development', function(){
 });
 
 app.get('/', routes.index);
+app.get('/weekdays', routes.weekdays);
 
 http.createServer(app).listen(3000);
 
