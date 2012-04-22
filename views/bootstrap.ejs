@@ -1,0 +1,34 @@
+"use strict"
+
+Schedule.scheduleFactory = {
+  createSchedule: function(id) {
+
+    var weekdays = <%- weekdays %>;
+    var timeslots = <%- timeslots %>;
+    var subjects = <%- subjects %>;
+    var lessons = <%- lessons %>;
+    
+    var weekdaysColl = new Schedule.Weekdays(weekdays);
+    var timeslotsColl = new Schedule.Timeslots(timeslots);
+    var subjectsColl = new Schedule.Subjects(subjects);
+    var lessonsColl =  new Schedule.Lessons(_.map(lessons, function(lessonTO) {
+      return new Schedule.Lesson({
+        id: lessonTO.id,
+        timeslot: timeslotsColl.get(lessonTO.timeslotId),
+        subject: subjectsColl.get(lessonTO.subjectId),
+        weekday: weekdaysColl.get(lessonTO.weekdayId)
+      });
+    }));
+    
+    return new Schedule.Schedule({
+      id: id,
+      name: "Patryk",
+      lessons: lessonsColl,
+      weekdays: weekdaysColl,
+      timeslots: timeslotsColl,
+      subjects: subjectsColl
+    });
+
+  }
+};
+

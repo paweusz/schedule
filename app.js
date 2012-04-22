@@ -26,6 +26,7 @@ app.configure('development', function(){
 
 app.get('/', routes.index);
 app.get('/weekdays', routes.weekdays);
+app.get('/js/bootstrap.js', routes.bootstrap);
 
 http.createServer(app).listen(3000);
 
