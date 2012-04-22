@@ -59,7 +59,6 @@ Schedule.Lessons = Backbone.Collection.extend({
 
 Schedule.Weekdays = Backbone.Collection.extend({
   model: Schedule.Weekday,
-  url: '/weekdays'
 });
 
 Schedule.Timeslots = Backbone.Collection.extend({

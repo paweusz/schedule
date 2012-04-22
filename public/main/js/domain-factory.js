@@ -3,14 +3,14 @@
 Schedule.timeslotsFactory = {
   createTimeslots: function() {
     return new Schedule.Timeslots([
-      new Schedule.Timeslot({id: 1, start: Schedule.hmToDate(8, 0), end: Schedule.hmToDate(8, 45)}),
-      new Schedule.Timeslot({id: 2, start: Schedule.hmToDate(8, 50), end: Schedule.hmToDate(9, 35)}),
-      new Schedule.Timeslot({id: 3, start: Schedule.hmToDate(9, 45), end: Schedule.hmToDate(10, 30)}),
-      new Schedule.Timeslot({id: 4, start: Schedule.hmToDate(10, 40), end: Schedule.hmToDate(11, 25)}),
-      new Schedule.Timeslot({id: 5, start: Schedule.hmToDate(11, 45), end: Schedule.hmToDate(12, 30)}),
-      new Schedule.Timeslot({id: 6, start: Schedule.hmToDate(12, 45), end: Schedule.hmToDate(13, 30)}),
-      new Schedule.Timeslot({id: 7, start: Schedule.hmToDate(13, 35), end: Schedule.hmToDate(14, 20)}),
-      new Schedule.Timeslot({id: 8, start: Schedule.hmToDate(14, 25), end: Schedule.hmToDate(15, 10)})
+      {id: 1, start: Schedule.hmToDate(8, 0), end: Schedule.hmToDate(8, 45)},
+      {id: 2, start: Schedule.hmToDate(8, 50), end: Schedule.hmToDate(9, 35)},
+      {id: 3, start: Schedule.hmToDate(9, 45), end: Schedule.hmToDate(10, 30)},
+      {id: 4, start: Schedule.hmToDate(10, 40), end: Schedule.hmToDate(11, 25)},
+      {id: 5, start: Schedule.hmToDate(11, 45), end: Schedule.hmToDate(12, 30)},
+      {id: 6, start: Schedule.hmToDate(12, 45), end: Schedule.hmToDate(13, 30)},
+      {id: 7, start: Schedule.hmToDate(13, 35), end: Schedule.hmToDate(14, 20)},
+      {id: 8, start: Schedule.hmToDate(14, 25), end: Schedule.hmToDate(15, 10)}
     ]);
   }
 };
@@ -18,11 +18,11 @@ Schedule.timeslotsFactory = {
 Schedule.weekdaysFactory = {
   createWeekdays: function() {
     return new Schedule.Weekdays([
-      new Schedule.Weekday({id: "Mon", name: "Poniedziałek"}),
-      new Schedule.Weekday({id: "Tue", name: "Wtorek"}),
-      new Schedule.Weekday({id: "Wed", name: "Środa"}),
-      new Schedule.Weekday({id: "Thu", name: "Czwartek"}),
-      new Schedule.Weekday({id: "Fri", name: "Piątek"})
+      {id: "Mon", name: "Poniedziałek"},
+      {id: "Tue", name: "Wtorek"},
+      {id: "Wed", name: "Środa"},
+      {id: "Thu", name: "Czwartek"},
+      {id: "Fri", name: "Piątek"}
     ]);
   }
 };
@@ -30,11 +30,11 @@ Schedule.weekdaysFactory = {
 Schedule.subjectsFactory = {
   createSubjects: function() {
     return new Schedule.Subjects([
-      new Schedule.Subject({id: "EW", name: "Edukacja Wczesnoszkolna"}),
-      new Schedule.Subject({id: "rel", name: "Religia"}),
-      new Schedule.Subject({id: "inf", name: "Informatyka"}),
-      new Schedule.Subject({id: "EWsg", name: "Wychowanie fizyczne"}),
-      new Schedule.Subject({id: "ang", name: "Język angielski"})
+      {id: "EW", name: "Edukacja Wczesnoszkolna"},
+      {id: "rel", name: "Religia"},
+      {id: "inf", name: "Informatyka"},
+      {id: "EWsg", name: "Wychowanie fizyczne"},
+      {id: "ang", name: "Język angielski"}
     ]);
   }
 };
