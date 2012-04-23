@@ -70,7 +70,7 @@ Schedule.Subjects = Backbone.Collection.extend({
 });
 
 Schedule.hmToDate = function(hour, minute) {
-  return new Date(0, 0, 0, hour, minute);
+  return new Date(0, 0, 1, hour, minute);
 }
 
 Schedule.sgn = function(value) {

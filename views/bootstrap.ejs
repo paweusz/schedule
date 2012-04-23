@@ -9,7 +9,13 @@ Schedule.scheduleFactory = {
     var lessons = <%- lessons %>;
     
     var weekdaysColl = new Schedule.Weekdays(weekdays);
-    var timeslotsColl = new Schedule.Timeslots(timeslots);
+    var timeslotsColl = new Schedule.Timeslots(_.map(timeslots, function(timeslotTO) {
+      return {
+        id: timeslotTO.id,
+        start: new Date(timeslotTO.start),
+        end: new Date(timeslotTO.end)
+      }
+    }));
     var subjectsColl = new Schedule.Subjects(subjects);
     var lessonsColl =  new Schedule.Lessons(_.map(lessons, function(lessonTO) {
       return new Schedule.Lesson({
