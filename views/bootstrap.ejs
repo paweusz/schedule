@@ -1,24 +1,25 @@
 "use strict"
 
-Schedule.scheduleFactory = {
-  createSchedule: function(id) {
+define(["domain"], function(domain) {
+
+  var createSchedule = function(id) {
 
     var weekdays = <%- weekdays %>;
     var timeslots = <%- timeslots %>;
     var subjects = <%- subjects %>;
     var lessons = <%- lessons %>;
     
-    var weekdaysColl = new Schedule.Weekdays(weekdays);
-    var timeslotsColl = new Schedule.Timeslots(_.map(timeslots, function(timeslotTO) {
+    var weekdaysColl = new domain.Weekdays(weekdays);
+    var timeslotsColl = new domain.Timeslots(_.map(timeslots, function(timeslotTO) {
       return {
         id: timeslotTO.id,
         start: new Date(timeslotTO.start),
         end: new Date(timeslotTO.end)
       }
     }));
-    var subjectsColl = new Schedule.Subjects(subjects);
-    var lessonsColl =  new Schedule.Lessons(_.map(lessons, function(lessonTO) {
-      return new Schedule.Lesson({
+    var subjectsColl = new domain.Subjects(subjects);
+    var lessonsColl =  new domain.Lessons(_.map(lessons, function(lessonTO) {
+      return new domain.Lesson({
         id: lessonTO.id,
         timeslot: timeslotsColl.get(lessonTO.timeslotId),
         subject: subjectsColl.get(lessonTO.subjectId),
@@ -26,7 +27,7 @@ Schedule.scheduleFactory = {
       });
     }));
     
-    return new Schedule.Schedule({
+    return new domain.Schedule({
       id: id,
       name: "Patryk",
       lessons: lessonsColl,
@@ -36,5 +37,9 @@ Schedule.scheduleFactory = {
     });
 
   }
-};
+
+  return {
+    createSchedule: createSchedule
+  }
+});
 
