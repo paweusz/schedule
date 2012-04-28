@@ -125,7 +125,7 @@ Schedule.Schedule = Backbone.Model.extend({
     dow--;
     var weekday = null;
     var weekdays = this.get('weekdays');
-    if (dow > weekdays.length) {
+    if (dow >= weekdays.length) {
       weekday = weekdays.first();
     } else {
       var lessons = this.getLessons(weekdays.models[dow]);
